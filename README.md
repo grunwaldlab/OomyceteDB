@@ -1,4 +1,4 @@
 # Oomycete-ID
 
-A new barcode for characterizing oomycete communities.
+Protocols and reference database for using the new barcode *rps10* for characterizing oomycete communities.
 
