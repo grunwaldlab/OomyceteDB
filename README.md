@@ -1,4 +1,4 @@
-# Oomycete-ID
+# OomyceteDB
 
-This site provides protocols and the corresponding reference database for using the new mitochondrial barcode *rps10* for characterizing oomycete communities.
+This site provides protocols and reference databases for characterizing oomycete communities based on the **rps10** and ITS barcodes.
 
