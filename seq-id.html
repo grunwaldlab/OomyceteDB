@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Phytophthora-ID | Sequence-ID</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="root" >
+	<!-- Le styles -->
+	<link href="Bootstrap_files/bootstrap.css" rel="stylesheet">
+	<link href="Bootstrap_files/phytophthora-lab.css" rel="stylesheet">
+	<style>
+	#updates .modal-body {
+	max-height: 800px;
+	}
+	#updates{
+	width: 900px;
+	margin: -250px 60 0 -450px;
+		}
+	     /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 95%;
+        height: auto !important;
+        height: 95%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -70px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 120px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+      #wrap > .container {
+        padding-top: 60px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+
+      code {
+        font-size: 80%;
+      }
+
+	</style>
+
+
+	<link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="../assets/js/html5shiv.js"></script>
+	<![endif]-->
+	<!-- Fav and touch icons -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="img/customIcon.png">
+</head>
+<body>
+	<div id="wrap">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="./index.html">Phytophthora-ID</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="./index.html">Home</a></li>
+							<li><a href="./seq-id.html">Sequence-ID</a></li>
+							<li><a href="./geno-id.html">Genotype-ID</a></li>
+							<li><a href="./about.html">About</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<h1><img src="img/seqid.png" class="img-circle" style="border:8px solid green; width:80px " >  Sequence-ID</h1>
+			<p>Choose a tab to identify species either by the ITS or <em>cox</em> spacer region using BLAST against our curated database:</p>
+			<!-- Tabs and Dropdowns -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#its" data-toggle="tab">ITS blast</a></li>
+				<li><a href="#cox" data-toggle="tab"><em>cox</em> spacer blast</a></li>
+				<li class="dropdown" id="help_menu">
+					<a class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#updates" data-toggle="modal">Site Help</a></li>
+						<li><a href="#" onClick="MyWindow=window.open('files/Phytophthora-ID sequencing protocols.pdf','MyWindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=300'); return false;">Protocols</a>
+					</ul>
+				<li>
+			</ul>
+			<div class="tab-content">
+				<!-- ITS Form -->
+				<div class="tab-pane active" id="its">
+					<form name="its-blast" onSubmit="return validateFasta(this);" class="form-horizontal" id="its_blast" method="get" action="/cgi-bin/its_blast.cgi">
+						<fieldset>
+							<legend>ITS blast search</legend>
+							<!-- Job Name Form -->
+							<div class="control-group">
+								<label class="control-label">Job name</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge span6" id="job_name" name="job_name" data-content="Enter a name for the job." data-original-title="Job Name" placeholder="Enter job name here">
+								</div>
+							</div>
+							<!-- Sequence Form -->
+							<div class="control-group">
+								<label class="control-label" for="textarea" >Input FASTA format sequence here:</label>
+								<div class="controls">
+									<textarea rows="11" class="input-xlarge span6" id="fasta_file" name="fasta_file" placeholder=" >Query ITS
+										GTGAGTACCTTGGGCTGCCTTTATATATAATCTAGAAACAAGGCCCCTGTAAGGCCCTTTCCTTCCTCCTCCCCAAAGCTATAAAAGATATTTGGGTAGAATTCACAGCTTCAGGCTATGGAACTCCTGGATTCCCTCCTTCCACTTCCACCCTACTGCAGAGATGCTGAGAAAGTCTGGGAGGGTTTTTCTAAAAGCTAAGCTGGGCCAAATAGCCAGGTTCAAGTCAGTACATGAAGAGTTGTGGTTCTAAATTCCTTCCCTACTCCAGCTCCAAATTTCATTTTAGTTCCACTTTTGGGCCTAACCAGCTAAAGGTCCCCACCCAGCTCCTGCCTATCTAGTCACTGCATATGGCAGACCTTGAAAGTCCTATCTCAAAGCAGCAGAATTATCAGTTATCTGTCTTGTCATGGAAAAGAGAGATAAGCAGAGGCCTGAGAAAGGAGTCTGGAGCTCCAGCTTCTGGTACACATCCTTGTGTTACCTGGATATGATCCTATTCCTCTAGAG"></textarea>
+									</div>
+								</div>
+								<!-- ITS Submit button-->
+								<div class="control-group">
+									<label class="control-label"></label>
+									<div class="controls">
+										<button id="button" type="submit" class="btn btn-success" >Submit and run</button>
+										<a href="files/Phytophthora-ID-ITS-version-1.17.fasta" download="Phytopthora-ID-ITS.fasta" class="btn btn-info"><span class="icon-download"></span> Download database</a>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				<!-- COX Form -->
+				<div class="tab-pane" id="cox">
+						<form name="cox-blast" onSubmit="return validateFasta(this);" class="form-horizontal" id="cox_blast" method="get" action="/cgi-bin/cox_blast.cgi">
+							<fieldset>
+								<legend><em>cox</em> spacer blast search</legend>
+								<!-- Job name Form -->
+								<div class="control-group">
+									<label class="control-label">Job name:</label>
+									<div class="controls">
+										<input type="text" class="input-xlarge span6" id="job_name" name="job_name" data-content="Enter a name for the job." data-original-title="Job Name" placeholder="Enter job name here">
+									</div>
+								</div>
+								<!-- Sequence Form -->
+								<div class="control-group">
+									<label class="control-label" for="textarea" >Input FASTA file:</label>
+									<div class="controls">
+										<textarea rows="11" class="input-xlarge span6" id="textarea" name="fasta_file" placeholder=" >Query COX
+											CTTTGGATCCCTGCTAGGCATCTGCCTAATGACACAAATCCTAACCGGCCTACTACTGGCCATACACTACACCGCGGACACAACCCTAGCCTTCTCATCCGTCGCCCACACATGTCGAAACGTACAATACGGCTGACTAATCCGCAACCTACATGCAAACGGAGCTTCATTCTTCTTCATCTGCATCTACCTCCACATTGGACGAGGACTTTACTATGGTTCGTACCTATACAAAGAAACATGAAACACAGGCGTCATCCTCCTACTCACCCTCATAGCAACTGCCTTCGTGGGCTACGTCCTACCATGAGGACAAATATCATTCTGAGGTGCCACAGTGATCACCAATTTATTCTCAGCCATCCCCTATATCGGCCAAACCCTTGTAGAATGGGCATGAGGAGGATTCTCAGTAGACAACCCCACCCTAACTCGATTCTTTGCCTTACACTTTCTCCTCCCCTTTGCAATTGCAGGCCTCACCCTAATCCATCTTACCTTTCTACACGAATC"></textarea>
+										</div>
+									</div>
+									<!-- Submit Button -->
+									<div class="control-group">
+										<label class="control-label"></label>
+										<div class="controls">
+											<button type="submit" class="btn btn-success" >Submit and run</button>
+										<a href="files/Phytopthora-ID-COX-version-1.3.fasta" download="Phytopthora-ID-COX.fasta" class="btn btn-info"><span class="icon-download"></span> Download database</a>
+										</div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+				<!-- End Of COX content-->
+			</div>
+			<!-- Start Of Modal popup showing the site help-->
+			<div class="modal fade hide" id="updates">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">&times;</a>
+					<h2>Help</h2>
+					<p>Choose the appropriate tab for help.</p>
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#sequence" data-toggle="pill">Sequence</a></li>
+						<li><a href="#database" data-toggle="pill">Databases</a></li>
+						<li><a href="#its_updates" data-toggle="pill">ITS updates</a></li>
+						<li><a href="#cox_updates" data-toggle="pill"><em>cox</em> spacer updates</a></li>
+					</ul>
+				</div>
+				<div class="modal-body">
+					<div class="pill-content">
+						<div class="pill-pane" id="its_updates">
+							<h3>ITS updates</h3>
+							<p>April 5, 2011 (version ITS 1.3)</p>
+							<p>Added species:</p>
+							<ul>
+								<li><em>P. chrysanthemi<br />
+								</em></li>
+								<li><em>P. elongata<br />
+								</em></li>
+								<li><em>P. capensis
+								</em></li></ul>
+								<p>December 9, 2011 (version ITS 1.4)</p>
+								<p>Added species:</p>
+								<ul>
+									<li><em>P. litoralis<br />
+									</em></li>
+									<li><em>P. gregata<br />
+									</em></li>
+									<li><em>P. gibbosa<br />
+									</em></li>
+									<li><em>P. thermophila<br />
+									</em></li>
+									<li><em>P. elongata<br />
+									</em></li>
+									<li><em>P. himalsilva<br />
+									</em></li>
+									<li><em>P. pini<br />
+									</em></li>
+									<li><em>P. glovera<br />
+									</em></li>
+									<li><em>P. pinifolia<br />
+									</em></li>
+									<li><em>P. arenaria<br />
+									</em></li>
+									<li><em>P. constricta<br />
+									</em></li>
+									<li><em>P. gemini<br />
+									</em></li>
+									<li><em>P. obscura
+									</em></li></ul>
+									<p>April 12, 2012 (version ITS 1.5)</p>
+									<p>Added species:</p>
+									<ul>
+										<li><em>P. cinnamomi </em>var.<em> parvispora<br />
+										</em></li>
+										<li><em>P. cinnamomi </em>var.<em> robiniae<br />
+										</em></li>
+										<li><em>P. fluvialis
+										</em></li></ul>
+										<p>June 19, 2012 (version ITS 1.6)</p>
+										<p>Added species:</p>
+										<ul>
+											<li><em>P. bilorbang
+											</em></li></ul>
+											<p>August 8, 2012 (version ITS 1.7)</p>
+											<p>Added species:</p>
+											<ul>
+												<li><em>P. litchii
+												</em></li></ul>
+											</div>
+											<div class="pill-pane" id="cox_updates">
+												<h3><em>cox</em> spacer updates</h3>
+												<p>To be updated.</p>
+											</div>
+											<div class="pill-pane active" id="sequence">
+												<h3> Sequence format	</h3>
+												<p>
+													Sequences need to follow the FASTA format:
+												</p>
+												<pre>
+	>Name of the sequence
+	CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGG
+	GGTCTTGTACCCTATCATGGCGAATGTTTGGACTTCGGTCCGGGCGAGTA
+	GCTTTTTGTTTTAAACCCATTTCACAATTCTGATTATACTGTGGGGACGA
+	AAGTCTCTGCTTTTAACTAGATAGCAACTTTCAGCAGTGGATGTCTAGGC
+	TCGCACATCGATGAAGAACGCTGCGAACTGCGATACGTAATGCGAATTGC
+	AGGATTCAGTGAGTCATCGAAATTTTGAACGCATATTGCACTTCCGGGTT
+	AGTCCTGGGAGTATGCCTGTATCAGTGTCCGTACATCAAACTTGGCTTTC
+	TTCCTTCCGTGTAGTCGGTGGAGGATGTGCCAGATGTGAAGTGTCTTGCG
+	TGTTGTCCTTCGGGTCGACTGCGAGTCCTTTTAAATGTACTGAACTGTAC
+	TTCTCTTTGCTCGAAAAGCGTGGTGTTGCTGGTTGTGGAGGCTGCCTGCG
+	TGGCCAGTCGGCGACCGGTTTGTCTGCTGCGGCGTTTAAAGGAGGAGTGT
+	TCGATTCGCGGTATGGTTGGCTTCGGCTGAACAGGCGCTTATTGAATGCT
+	TTTCCTGCTGTGGCGTGATGGGCTGGTGAACCGTAGCTGTGTTTGGCTTG
+	GCTTTTGAATCGGTTTTGCTGTTGCGAAGTAGAGTGGCGGCTTCGGCTGT
+	CGAGGGTCGATCCATTTTGGGAATTTTGTGTGCACTTCGGTGCGCATCTC
+	AA</pre>
+							</div>
+							<div class="pill-pane" id="database">
+									<h3>
+										<strong>Databases</strong>
+									</h3>
+									<ul>
+										<li>
+											<strong><em>ITS.</em></strong> The database contains internal transcribed spacer (ITS) region in FASTA format. The database is highly selective and generally only includes sequences that are associated with an original <em>Phytophthora</em> species desciption paper or the classic <em>Phytophthora</em> phylogenetics references by Cooke et al. (2000) and Martin &amp; Tooley (2003) as well as Blair et al. (2008). Other sources may be cited if they present unique, peer-reviewed sequences of authenticated isolates. Novel taxa tentatively named are selectively included and labeled as <em>P.</em> taxon "X". The ITS database contains all clades recognized by Blair et al. (2008) and Cooke et al. (2000) as well as a few <em>Pythium</em> species for reference.
+										</li>
+									</ul>
+									<ul>
+										<li>
+											<em><strong><em>cox</em> spacer.</strong></em> The database contains <em>cox</em> spacer sequences in FASTA format. Sequence data was obtained courtesy of <a href="http://www.phytophthoradb.org/" target="_blank">Phytophthora-DB</a> and have been validated using sequences from Blair et al. (2008).<a href="#top"><br></a>
+										</li>
+									</ul>
+								</div>
+							<div class="pill-pane" id="citation">
+									<h2>
+										<strong>Citation</strong>
+									</h2>
+									<p>If you use this Phytophthora-ID for publishable research please cite the following reference:
+									</p>
+									<p>
+										<span style="line-height: 17px;" class="style_5">Grünwald, N. J., Martin, F. N., Larsen, M. M., Sullivan, Press, C. M., Coffey, M. D., Hansen, E. M., and Parke, J. L. 2011. Phytophthora-ID.org: A sequence-based</span> <span style="line-height: 17px;" class="style_6">Phytophthora</span> <span style="line-height: 17px;" class="style_5">identification tool. Plant Disease 95: 337-342.</span>
+									</p>
+								</div>
+							</div>
+					<div class="modal-footer">
+								<a href="#" class="btn" data-dismiss="modal">Close</a>
+							</div>
+				</div>			</div>
+			<div id="push"></div>
+		</div>
+
+	</div>
+
+
+
+<div id="footer">
+	<div class="container">
+		<br>
+		<div class="span5"><p><small><a href="http://grunwaldlab.cgrb.oregonstate.edu/" target="_blank"> <strong>Grünwald lab</strong></a>
+			<br><strong>Horticultural Crops Research Laboratory, USDA-ARS</strong>
+			<br><strong>Department of Botany and Plant Pathology, Oregon State University</strong>
+			<br>3420 NW Orchard Ave., Corvallis, OR 97330
+			<br>
+		</div>
+		<div align="left" class="span2 offset2">
+			<br>
+			<span class="icon-twitter"> </span>
+			<a href="http://www.twitter.com/PhytophthoraLab" target="_blank">Follow us on Twitter</a>
+			<br>
+			<span class="icon-googleplus"> </span>
+			<a href="https://plus.google.com/105854704396238601604/" target="_blank">Follow us on Google Plus</a>
+			</small>
+		</div>
+	</div>
+</div>
+															<!-- Le javascript
+															================================================== -->
+															<!-- Placed at the end of the document so the pages load faster -->
+															<script src="Bootstrap_files/jquery.js"></script>
+															<script src="Bootstrap_files/bootstrap-transition.js"></script>
+															<script src="Bootstrap_files/bootstrap-alert.js"></script>
+															<script src="Bootstrap_files/bootstrap-modal.js"></script>
+															<script src="Bootstrap_files/bootstrap-dropdown.js"></script>
+															<script src="Bootstrap_files/bootstrap-scrollspy.js"></script>
+															<script src="Bootstrap_files/bootstrap-tab.js"></script>
+															<script src="Bootstrap_files/bootstrap-tooltip.js"></script>
+															<script src="Bootstrap_files/bootstrap-popover.js"></script>
+															<script src="Bootstrap_files/bootstrap-button.js"></script>
+															<script src="Bootstrap_files/bootstrap-collapse.js"></script>
+															<script src="Bootstrap_files/bootstrap-carousel.js"></script>
+															<script src="Bootstrap_files/bootstrap-typeahead.js"></script>
+															<script src="Bootstrap_files/holder.js"></script>
+															<script src="validate.js"></script>
+</body></html>
