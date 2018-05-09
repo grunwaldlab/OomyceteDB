@@ -1,0 +1,17 @@
+---
+title: "Search OomyceteDB"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+
+## Search the database
+
+> An interative widget to search the database by taxon name or other information and download the results.
+
+## BLAST the database
+
+> An interative widget to blast sequences against the database and download the results.

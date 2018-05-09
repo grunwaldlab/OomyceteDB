@@ -1,0 +1,15 @@
+---
+title: "OomyceteDB"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+
+## Taxa represented in the database
+
+> Heat tree goes here
+
+## Disclaimer statement

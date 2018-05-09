@@ -1,0 +1,8 @@
+---
+title: "How to cite"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```

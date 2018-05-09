@@ -1,0 +1,27 @@
+---
+title: "Downloads"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+## Current release
+
+This is the most recent release of OomyceteDB.
+
+### Recent changes
+
+> News for current release
+
+### Generic
+
+### QIIME
+
+### Mothur
+
+### USEARCH/VSEARCH
+
+## Archived releases
+
