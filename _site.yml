@@ -16,6 +16,8 @@ navbar:
     href: contact.html
   - text: Contribute
     href: contribute.html
+  - text: About
+    href: about.html
   right:
   - icon: fa-github
     href: https://github.com/grunwaldlab/OomyceteDB

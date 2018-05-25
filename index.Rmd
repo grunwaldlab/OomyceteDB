@@ -7,9 +7,15 @@ output: html_document
 source("style.R")
 ```
 
+> Decroative banner
 
 ## Taxa represented in the database
 
-> Heat tree goes here
+> Heat tree
+
+> High level summary
+
+## How to cite
+
 
 ## Disclaimer statement
