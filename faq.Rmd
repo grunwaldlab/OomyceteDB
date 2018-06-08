@@ -1,8 +1,11 @@
 ---
-title: "Frequently asked questions"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 source("style.R")
 ```
+
+# Frequently asked questions
+
+As we get questions, we will post them and our answers here.

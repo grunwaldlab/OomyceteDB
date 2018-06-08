@@ -1,5 +1,4 @@
 ---
-title: "Contact us"
 output: html_document
 ---
 
@@ -7,3 +6,40 @@ output: html_document
 source("style.R")
 ```
 
+## Contact information
+
+**Primary contact:**
+
+Niklaus Grunwald
+
+**Address:**
+
+USDA ARS, Horticultural Crops Research Lab,
+34032 Orchard Ave. Corvallis, OR 97330, USA
+
+**Telephone:**
+
+541-738-4049
+
+**Fax:**
+
+541-738-4025
+
+## Send us an email
+
+> NOT WORKING YET
+
+<div class="contact_container">
+<form role="form" method="post">
+<label for="name">Name</label>
+<input type="text" id="name" name="name" placeholder="Your name..">
+<label for="email">Email</label>
+<input type="text" id="email" name="email" placeholder="Your email..">
+<label for="content">Content</label>
+<textarea id="content" name="content" placeholder="Write something.." style="height:200px"></textarea>
+<input type="submit" value="Send">
+</form>
+</div>
+
+
+ 

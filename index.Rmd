@@ -1,5 +1,4 @@
 ---
-title: "OomyceteDB"
 output: html_document
 ---
 
@@ -7,15 +6,56 @@ output: html_document
 source("style.R")
 ```
 
-> Decroative banner
+# RPS10 oomycete barcode database
+
+Welcome to the website for the RPS10 Oomycete barcode database.
+This site provides references sequences that can be used to identify oomycetes using the RPS10 locus and some basic tools to identifiy RPS sequences from unidentified oomycetes.
 
 ## Taxa represented in the database
 
-> Heat tree
+The following taxonomic tree shows the species represented by this database and the number of species.
 
-> High level summary
+```{r}
+library(metacoder)
+seqs <- ape::read.FASTA("data/source/rps10_database.fa")
+obj <- extract_tax_data(names(seqs),
+                        key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
+                        regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
+                        class_sep = ";")
+```
+
+```{r cache=TRUE, fig.width=10, fig.height=8}
+set.seed(2)
+obj %>%
+  filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
+  remove_redundant_names() %>%
+  heat_tree(node_label = taxon_names,
+            node_size = n_obs, 
+            node_color = n_obs,
+            node_size_range = c(0.01, 0.04),
+            node_label_size_range = c(0.015, 0.03),
+            edge_size_range =  c(0.01, 0.04) * .5,
+            layout = "da", initial_layout = "re",
+            node_color_axis_label = "Number of sequences")
+```
+
+```{r}
+library(dplyr)
+taxa_in_table <- c("Phytophthora", "Pythium", "Phytopythium", "Achlya", "Albugo", "Peronospora", "Plasmopara", "Saprolegnia")
+obj %>%
+  filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
+  get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
+  filter(taxon_names %in% taxa_in_table) %>%
+  transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
+  knitr::kable()
+```
+
 
 ## How to cite
 
+Still working on it. Probably some Nature or Science paper at least. 
 
 ## Disclaimer statement
+
+Data on this website is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.
+In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this data, even if advised of the possibility of such damage.

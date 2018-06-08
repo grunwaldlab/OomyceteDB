@@ -1,5 +1,5 @@
 # Knitr settings
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, autodep = TRUE)
 options(crayon.enabled = TRUE)
 
 # Knitr hooks

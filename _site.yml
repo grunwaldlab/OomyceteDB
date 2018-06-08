@@ -2,28 +2,22 @@ name: my-website
 navbar:
   title: OomyceteDB
   left:
-  - text: Home
-    href: index.html
   - text: Search
     href: search.html
   - text: Download
     href: download.html
-  - text: Cite
-    href: cite.html
-  - text: FAQ
-    href: faq.html
   - text: Contact
     href: contact.html
   - text: Contribute
     href: contribute.html
   - text: About
     href: about.html
-  right:
-  - icon: fa-github
-    href: https://github.com/grunwaldlab/OomyceteDB
+  - text: FAQ
+    href: faq.html
 output:
   html_document:
-    theme: spacelab
+    runtime: shiny
+    theme: sandstone
     highlight: tango
     include:
       after_body: footer.html
