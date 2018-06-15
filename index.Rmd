@@ -6,12 +6,13 @@ output: html_document
 source("style.R")
 ```
 
-# RPS10 oomycete barcode database
+# *Rps10* barcode for oomycetes
 
-Welcome to the website for the RPS10 Oomycete barcode database.
+### Database for the *RPS10* barcode with high specificity and sensisitivty fro oomycetes
+
 This site provides references sequences that can be used to identify oomycetes using the RPS10 locus and some basic tools to identifiy RPS sequences from unidentified oomycetes.
 
-## Taxa represented in the database
+## Oomycete specificity
 
 The following taxonomic tree shows the species represented by this database and the number of species.
 
@@ -38,6 +39,8 @@ obj %>%
             layout = "da", initial_layout = "re",
             node_color_axis_label = "Number of sequences")
 ```
+
+## Current coverage of speceis per genus in the oomycetes
 
 ```{r}
 library(dplyr)
