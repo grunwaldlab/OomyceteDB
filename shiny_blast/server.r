@@ -2,6 +2,7 @@ require(XML)
 library(plyr)
 library(dplyr)
 library(DT)
+library(metacoder)
 
 server <- function(input, output, session) {
   
@@ -92,7 +93,16 @@ server <- function(input, output, session) {
       results$prop_identity <- results$identity / results$align_len
       results$prop_match_len <- (results$query_to - results$query_from + 1) / results$query_len
       
-      return(results)
+      # Convert to taxmap
+      tm_obj <- taxa::extract_tax_data(results$hit_ids,
+                                       class_sep = ";",
+                                       regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)$",
+                                       key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
+      
+      # Add on results table to taxmap
+      tm_obj$data$tax_data <- bind_cols(tm_obj$data$tax_data, results)
+      
+      return(tm_obj)
     }
   })
   
@@ -101,22 +111,18 @@ server <- function(input, output, session) {
     if (is.null(blast_results())) {
     } else {
       results <- parsed_results()
-      tm_obj <- taxa::extract_tax_data(results$hit_ids,
-                                       class_sep = ";",
-                                       regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)$",
-                                       key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
-      results$classification <- tm_obj %>% 
+      classification <- results %>% 
         filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
         filter_taxa(!is_root) %>%
         classifications() %>% 
-        `[`(tm_obj$data$tax_data$taxon_id)
+        `[`(results$data$tax_data$taxon_id)
         
       
-      results %>% 
+      results$data$tax_data %>% 
         transmute("Query ID" = query_id,
                   "Hit taxonomic classification" = classification,
-                  "Identity" = round(prop_identity, digits = 3),
-                  "Query Matched" = round(prop_match_len, digits = 3))
+                  "Identity (%)" = round(prop_identity * 100, digits = 3),
+                  "Query Coverage (%)" = round(prop_match_len * 100, digits = 3))
     }
   }, selection = "single")
   
@@ -124,13 +130,32 @@ server <- function(input, output, session) {
   output$clicked <- renderTable({
     if(is.null(input$blast_results_rows_selected)){}
     else{
-      xmltop = xmlRoot(blast_results())
-      clicked = input$blast_results_rows_selected
-      tableout<- data.frame(parsed_results()[clicked,])
+      xmltop <- xmlRoot(blast_results())
+      clicked <- input$blast_results_rows_selected
+      results <- parsed_results()
+      tableout <- data.frame(results$data$tax_data[clicked,])
+      tableout <- transmute(tableout,
+                            "Hit taxonomic classification" = taxonomy,
+                            "Hit NCBI taxon ID" = tax_id,
+                            # accesion number when we have it
+                            "Identity (%)" = round(prop_identity * 100, digits = 3),
+                            "Alignment length" = align_len,
+                            "Mismatches" = align_len - identity, #check 
+                            "Gaps" =  gaps,
+                            "Query aligned range" = paste(query_from, "-", query_to),
+                            "Hit aligned range" = paste(hit_from, "-", hit_to),
+                            "E value" = evalue,
+                            "Bit score"  = bit_score,
+                            "Query ID" = query_id,
+                            # "Hit ID" = hit_ids,
+                            "Query Coverage (%)" = round(prop_match_len * 100, digits = 3),
+                            "Matching base pairs" = identity,
+                            "Hit length" = hit_length
+                            # "Hit sequence" = hit_seq
+                            )
       
       tableout <- t(tableout)
       names(tableout) <- c("")
-      rownames(tableout) <- c("Query ID","Hit ID", "Length", "Bit Score", "e-value")
       colnames(tableout) <- NULL
       data.frame(tableout)
     }
@@ -152,15 +177,20 @@ server <- function(input, output, session) {
         rbind(top,mid,bottom)
       })
         
-      #split the alignments every 40 carachters to get a "wrapped look"
+      #split the alignments every 80 carachters to get a "wrapped look"
       alignx <- do.call("cbind", align)
-      splits <- strsplit(gsub("(.{40})", "\\1,", alignx[1:3,clicked]),",")
+      splits <- strsplit(gsub("(.{80})", "\\1,", alignx[1:3,clicked]),",")
       
       #paste them together with returns '\n' on the breaks
-      split_out <- lapply(1:length(splits[[1]]),function(i){
-        rbind(paste0("Q-",splits[[1]][i],"\n"),paste0("M-",splits[[2]][i],"\n"),paste0("H-",splits[[3]][i],"\n"))
+      split_out <- lapply(seq_along(splits[[1]]), function(i){
+        rbind(paste0("Q-", splits[[1]][i], "\n"),
+              paste0("  ", splits[[2]][i], "\n"),
+              paste0("H-", splits[[3]][i], "\n"),
+              "\n")
       })
-      unlist(split_out)
+      output <- unlist(split_out)
+      output[1] <- paste0(" ", output[1])
+      return(output)
     }
   })
 }
