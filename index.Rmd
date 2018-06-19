@@ -6,15 +6,10 @@ output: html_document
 source("style.R")
 ```
 
-# *Rps10* barcode for oomycetes
+# *Rps10*, a new barcode with high specificity and sensitivity for oomycetes
 
-### Database for the *RPS10* barcode with high specificity and sensisitivty fro oomycetes
-
-This site provides references sequences that can be used to identify oomycetes using the RPS10 locus and some basic tools to identifiy RPS sequences from unidentified oomycetes.
-
-## Oomycete specificity
-
-The following taxonomic tree shows the species represented by this database and the number of species.
+This site provides references sequences that can be used to identify oomycetes using the mitochondrial *rps10* locus and some basic tools to identify *rps10* sequences from unidentified oomycetes.
+The following heat-tree shows the species currently represented in the database and the number of species.
 
 ```{r}
 library(metacoder)
@@ -40,25 +35,29 @@ obj %>%
             node_color_axis_label = "Number of sequences")
 ```
 
-## Current coverage of speceis per genus in the oomycetes
+### Current coverage of species per genus in the oomycetes
 
 ```{r}
 library(dplyr)
+library(knitr)
+library(kableExtra)
 taxa_in_table <- c("Phytophthora", "Pythium", "Phytopythium", "Achlya", "Albugo", "Peronospora", "Plasmopara", "Saprolegnia")
 obj %>%
   filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
   get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
   filter(taxon_names %in% taxa_in_table) %>%
   transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
-  knitr::kable()
+  kable() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
+  column_spec(1, italic = T) 
 ```
 
 
-## How to cite
+### How to cite
 
-Still working on it. Probably some Nature or Science paper at least. 
+Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., ..., and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.
 
-## Disclaimer statement
+### Disclaimer statement
 
 Data on this website is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.
 In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this data, even if advised of the possibility of such damage.
