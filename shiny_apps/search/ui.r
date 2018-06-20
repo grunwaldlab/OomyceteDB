@@ -20,10 +20,9 @@ ui <- fluidPage(
   
   mainPanel(
     h3("Subsetting options"),
-    div(style="display:inline-block",
-        selectInput("db", "Database:", choices = c("current"), width = option_width)),
-    div(style="display:inline-block",
-        textInput("taxon_subset", "Taxa:", value = "", placeholder = "pythium, phytophthora", width = option_width)),
+    selectInput("db", "Database:", choices = c("current"), width = option_width),
+    textInput("taxon_subset", "Taxa to subset the database to:", value = "",
+              placeholder = "pythium, phytophthora, Albuginaceae, etc ...", width = "500px"),
     br(),
     actionButton("search", "Search database")
   ),
@@ -31,10 +30,10 @@ ui <- fluidPage(
   
   mainPanel(
     h3("Results"),
-    DT::dataTableOutput("database_list"),
-    uiOutput("download_data_form")
-    # uiOutput("seq_list"),
-    # uiOutput("seq_details")
+    # DT::dataTableOutput("database_list"),
+    uiOutput("seq_list_table"),
+    uiOutput("download_data_form"),
+    uiOutput("seq_details")
   )
   
   

@@ -52,42 +52,19 @@ server <- function(input, output, session) {
                   # "NCBI taxon ID" = tax_id,
                   "Taxonomy" = classification)
     }
-  }, selection = "single")
+  }, selection = "multiple")
   
   
-  # this chunk gets the alignemnt information from a clicked row
-  output$clicked <- renderTable({
-    if(is.null(input$blast_results_rows_selected)){}
+  output$selected_seq_printout <- renderText({
+    if(is.null(input$database_list_rows_selected)){}
     else{
-      clicked <- input$blast_results_rows_selected
-      results <- parsed_results()
-      tableout <- data.frame(results$data$tax_data[clicked,])
-      tableout <- transmute(tableout,
-                            "Hit taxonomic classification" = taxonomy,
-                            "Hit NCBI taxon ID" = tax_id,
-                            # accesion number when we have it
-                            "Identity (%)" = round(prop_identity * 100, digits = 3),
-                            "Alignment length" = align_len,
-                            "Mismatches" = align_len - identity, #check 
-                            "Gaps" =  gaps,
-                            "Query aligned range" = paste(query_from, "-", query_to),
-                            "Hit aligned range" = paste(hit_from, "-", hit_to),
-                            "E value" = evalue,
-                            "Bit score"  = bit_score,
-                            "Query ID" = query_id,
-                            # "Hit ID" = hit_ids,
-                            "Query Coverage (%)" = round(prop_match_len * 100, digits = 3),
-                            "Matching base pairs" = identity,
-                            "Hit length" = hit_length
-                            # "Hit sequence" = hit_seq
-      )
-      
-      tableout <- t(tableout)
-      names(tableout) <- c("")
-      colnames(tableout) <- NULL
-      data.frame(tableout)
+      results <- selected_subset()
+      clicked <- input$database_list_rows_selected
+      output <- paste0(">", results$data$tax_data$input[clicked], "\n",
+                       results$data$tax_data$sequence[clicked], "\n")
+      return(output)
     }
-  }, rownames = TRUE, colnames = FALSE)
+  })
   
   
   database_for_download <- eventReactive(
@@ -95,7 +72,18 @@ server <- function(input, output, session) {
     ignoreNULL = TRUE,
     {
       results <- selected_subset()
-      paste0(">", results$data$tax_data$input, "\n", results$data$tax_data$sequence)
+      paste0(">", results$data$tax_data$input, "\n",
+             results$data$tax_data$sequence)
+    })
+  
+  
+  database_for_download_selected <- eventReactive(
+    eventExpr = input$database_list_rows_selected,
+    ignoreNULL = TRUE,
+    {
+      results <- selected_subset()
+      paste0(">", results$data$tax_data$input[input$database_list_rows_selected], "\n",
+             results$data$tax_data$sequence[input$database_list_rows_selected])
     })
   
   
@@ -105,8 +93,17 @@ server <- function(input, output, session) {
       paste0("oomycetedb_subset_", format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".fa")
     },
     content = function(file) {
-      print("heres")
       not_used <- readr::write_lines(database_for_download(), path = file)
+    }
+  )
+  
+  output$download_data_selected <- downloadHandler(
+    contentType = "text/csv",
+    filename = function() {
+      paste0("oomycetedb_subset_", format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".fa")
+    },
+    content = function(file) {
+      not_used <- readr::write_lines(database_for_download_selected(), path = file)
     }
   )
   
@@ -114,13 +111,48 @@ server <- function(input, output, session) {
   output$download_data_form <- renderUI({
     if (is.null(selected_subset())) {
     } else {
+      if (is.null(input$database_list_rows_selected)) {
+        return(list(
+          # h4("Download database subset"),
+          downloadButton(outputId = "download_data", label = "Download database subset")
+        ))
+      } else {
+        return(list(
+          # h4("Download database subset"),
+          downloadButton(outputId = "download_data", label = "Download database subset"),
+          downloadButton(outputId = "download_data_selected", label = "Download selected sequences")
+        ))
+        
+      }
+    }
+  })
+  
+  output$seq_list_table <- renderUI({
+    if (is.null(selected_subset())) {
+    } else {
       list(
-        h4("Download database subset"),
-        downloadButton(outputId = "download_data", label = "Download FASTA")
+        h4("Sequences in subset"),
+        DT::dataTableOutput("database_list")
       )
     }
   })
   
-  
+  output$seq_details <- renderUI({
+    x = 1
+    if (is.null(selected_subset())) {
+    } else {
+      if (is.null(input$database_list_rows_selected)) {
+        return(list(
+          h4("Selected sequences"),
+          p("Click on a row to get the FASTA entry...")
+        ))
+      } else {
+        return(list(
+          h4("Selected sequences"),
+          verbatimTextOutput("selected_seq_printout")
+        ))
+      }
+    }
+  })
 }
 
