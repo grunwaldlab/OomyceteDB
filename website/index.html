@@ -20,6 +20,7 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 
@@ -163,13 +164,13 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="blast.html">BLAST</a>
+</li>
+<li>
   <a href="search.html">Search</a>
 </li>
 <li>
   <a href="download.html">Download</a>
-</li>
-<li>
-  <a href="contact.html">Contact</a>
 </li>
 <li>
   <a href="contribute.html">Contribute</a>
@@ -196,77 +197,124 @@ $(document).ready(function () {
 </div>
 
 
-<div id="rps10-barcode-for-oomycetes" class="section level1">
-<h1><em>Rps10</em> barcode for oomycetes</h1>
-<div id="database-for-the-rps10-barcode-with-high-specificity-and-sensisitivty-fro-oomycetes" class="section level3">
-<h3>Database for the <em>RPS10</em> barcode with high specificity and sensisitivty fro oomycetes</h3>
-<p>This site provides references sequences that can be used to identify oomycetes using the RPS10 locus and some basic tools to identifiy RPS sequences from unidentified oomycetes.</p>
-</div>
-<div id="oomycete-specificity" class="section level2">
-<h2>Oomycete specificity</h2>
-<p>The following taxonomic tree shows the species represented by this database and the number of species.</p>
+<div id="rps10-a-new-barcode-with-high-specificity-and-sensitivity-for-oomycetes" class="section level1">
+<h1><em>Rps10</em>, a new barcode with high specificity and sensitivity for oomycetes</h1>
+<p>This site provides references sequences that can be used to identify oomycetes using the mitochondrial <em>rps10</em> locus and some basic tools to identify <em>rps10</em> sequences from unidentified oomycetes. The following heat-tree shows the species currently represented in the database and the number of species.</p>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
-</div>
-<div id="current-coverage-of-speceis-per-genus-in-the-oomycetes" class="section level2">
-<h2>Current coverage of speceis per genus in the oomycetes</h2>
-<table>
+<div id="current-coverage-of-species-per-genus-in-the-oomycetes" class="section level3">
+<h3>Current coverage of species per genus in the oomycetes</h3>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Genus</th>
-<th align="right">Number of species</th>
-<th align="right">Number of sequences</th>
+<tr>
+<th style="text-align:left;">
+Genus
+</th>
+<th style="text-align:right;">
+Number of species
+</th>
+<th style="text-align:right;">
+Number of sequences
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Phytophthora</td>
-<td align="right">75</td>
-<td align="right">187</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Phytophthora
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+187
+</td>
 </tr>
-<tr class="even">
-<td align="left">Phytopythium</td>
-<td align="right">8</td>
-<td align="right">15</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Phytopythium
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+15
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Achlya</td>
-<td align="right">1</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Achlya
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Albugo</td>
-<td align="right">1</td>
-<td align="right">17</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Albugo
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+17
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Peronospora</td>
-<td align="right">13</td>
-<td align="right">195</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Peronospora
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+195
+</td>
 </tr>
-<tr class="even">
-<td align="left">Plasmopara</td>
-<td align="right">3</td>
-<td align="right">15</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Plasmopara
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+15
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Pythium</td>
-<td align="right">32</td>
-<td align="right">45</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Pythium
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+45
+</td>
 </tr>
-<tr class="even">
-<td align="left">Saprolegnia</td>
-<td align="right">2</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;font-style: italic;">
+Saprolegnia
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="how-to-cite" class="section level2">
-<h2>How to cite</h2>
-<p>Still working on it. Probably some Nature or Science paper at least.</p>
+<div id="how-to-cite" class="section level3">
+<h3>How to cite</h3>
+<p>Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., …, and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.</p>
 </div>
-<div id="disclaimer-statement" class="section level2">
-<h2>Disclaimer statement</h2>
+<div id="disclaimer-statement" class="section level3">
+<h3>Disclaimer statement</h3>
 <p>Data on this website is provided by the copyright holders and contributors “as is” and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this data, even if advised of the possibility of such damage.</p>
 </div>
 </div>

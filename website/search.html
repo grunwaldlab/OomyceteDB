@@ -11,7 +11,7 @@
 
 
 
-<title>Search OomyceteDB</title>
+<title>Search the database</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -163,13 +163,13 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="blast.html">BLAST</a>
+</li>
+<li>
   <a href="search.html">Search</a>
 </li>
 <li>
   <a href="download.html">Download</a>
-</li>
-<li>
-  <a href="contact.html">Contact</a>
 </li>
 <li>
   <a href="contribute.html">Contribute</a>
@@ -192,17 +192,13 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Search OomyceteDB</h1>
+<h1 class="title toc-ignore">Search the database</h1>
 
 </div>
 
 
-<div id="blast-the-database" class="section level1">
-<h1>BLAST the database</h1>
-<p>You can blast your own sequences against the OomyceteDB RPS10 database here. This blast will be run on our servers. For large or numerous blast runs, we sugest you download a version of the database <a href="download.html">here</a> and run blast locally.</p>
-<iframe class="shiny_frame" src="http://127.0.0.1:3838/shiny_blast" frameBorder="0" width="120%" height="10000px">
+<iframe class="search_shiny_frame" src="http://127.0.0.1:3838/shiny_search" frameBorder="0">
 </iframe>
-</div>
 
 <font color="grey">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License </a></font>.
 
