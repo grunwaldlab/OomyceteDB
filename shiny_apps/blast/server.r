@@ -29,7 +29,7 @@ server <- function(input, output, session) {
     {
       
       # Choose database (NOT ACTUALLY CHOOSING YET)
-      db <- file.path("../data/blast_databases", input$db)
+      db <- file.path("../../data/blast_databases", input$db)
       remote <- c("")
       
       # Format query

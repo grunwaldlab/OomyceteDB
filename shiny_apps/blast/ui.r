@@ -49,16 +49,15 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 # this snippet generates a progress indicator for long BLASTs
                 div(class = "busy",  
                     p("Calculation in progress.."), 
-                    img(src="../images/blast_progress.gif", height = 100, width = 100, align = "center")
+                    img(src="../../images/blast_progress.gif", height = 100, width = 100, align = "center")
                 ),
                 
                 # Basic results output
                 mainPanel(
                   h3("Results"),
                   # h4("Download BLAST output"),
-                  div(style="display:inline-block", uiOutput("download_data_form")),
-                  div(style="display:inline-block", uiOutput("hit_list")),
-                  div(style="display:inline-block", uiOutput("hit_details")),
-                  uiOutput("before_blast_msg")
+                  uiOutput("download_data_form"),
+                  uiOutput("hit_list"),
+                  uiOutput("hit_details")
                 )
 )
