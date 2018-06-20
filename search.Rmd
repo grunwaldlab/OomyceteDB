@@ -1,5 +1,5 @@
 ---
-title: "Search OomyceteDB"
+title: "Search the database"
 output: html_document
 ---
 
@@ -7,13 +7,8 @@ output: html_document
 source("style.R")
 ```
 
+**The application below might take a few seconds to load**
 
-## Search the database
-
-> An interative widget to search the database by taxon name or other information and download the results.
-
-## BLAST the database
-
-<iframe class = "shiny_frame" src="http://127.0.0.1:3838/shiny_blast" frameBorder="0" width = 100% height = 10000px>
+<iframe class = "shiny_frame" src="http://127.0.0.1:3838/shiny_apps/search" frameBorder="0">
 </iframe>
 

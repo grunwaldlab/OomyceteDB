@@ -11,7 +11,7 @@
 
 
 
-<title>Search OomyceteDB</title>
+<title>Search the database</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,6 +20,7 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+
 
 
 
@@ -162,13 +163,13 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="blast.html">BLAST</a>
+</li>
+<li>
   <a href="search.html">Search</a>
 </li>
 <li>
   <a href="download.html">Download</a>
-</li>
-<li>
-  <a href="contact.html">Contact</a>
 </li>
 <li>
   <a href="contribute.html">Contribute</a>
@@ -191,22 +192,14 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Search OomyceteDB</h1>
+<h1 class="title toc-ignore">Search the database</h1>
 
 </div>
 
 
-<div id="search-the-database" class="section level2">
-<h2>Search the database</h2>
-<blockquote>
-<p>An interative widget to search the database by taxon name or other information and download the results.</p>
-</blockquote>
-</div>
-<div id="blast-the-database" class="section level2">
-<h2>BLAST the database</h2>
-<iframe class="shiny_frame" src="http://127.0.0.1:4019?showcase=0" width="100%" height="1000px" frameBorder="0">
+<p><strong>The application below might take a few seconds to load</strong></p>
+<iframe class="shiny_frame" src="http://127.0.0.1:3838/shiny_apps/search" frameBorder="0">
 </iframe>
-</div>
 
 <font color="grey">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License </a></font>.
 
