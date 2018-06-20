@@ -2,12 +2,12 @@ name: my-website
 navbar:
   title: OomyceteDB
   left:
+  - text: BLAST
+    href: blast.html
   - text: Search
     href: search.html
   - text: Download
     href: download.html
-  - text: Contact
-    href: contact.html
   - text: Contribute
     href: contribute.html
   - text: About

@@ -1,0 +1,17 @@
+---
+title: "BLAST the database"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+
+You can run BLAST to align your own sequences against the OomyceteDB RPS10 database here.
+This blast will be run on our servers and we have limited resources.
+For large or numerous blast runs, we sugest you download a version of the database [here](download.html) and run blast locally.
+
+<iframe class = "blast_shiny_frame" src="http://127.0.0.1:3838/shiny_blast" frameBorder="0">
+</iframe>
+

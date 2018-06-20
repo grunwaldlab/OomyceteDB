@@ -3,10 +3,27 @@ library(plyr)
 library(dplyr)
 library(DT)
 library(metacoder)
+library(shinyjs)
+
+outfmt_options <- c(" 0: pairwise",
+                    " 1: query-anchored showing identities", 
+                    " 2: query-anchored no identities",
+                    " 3: flat query-anchored show identities", 
+                    " 4: flat query-anchored no identities",
+                    " 5: XML Blast output", 
+                    " 6: tabular",
+                    " 7: tabular with comment lines",
+                    " 8: Text ASN.1", 
+                    " 9: Binary ASN.1",
+                    "10: Comma-separated values",
+                    "11: BLAST archive format (ASN.1)", 
+                    "12: JSON Seqalign output",
+                    "13: JSON Blast output",
+                    "14: XML2 Blast output")
 
 server <- function(input, output, session) {
   
-  blast_results <- eventReactive(
+  raw_blast_results <- eventReactive(
     eventExpr = input$blast,
     ignoreNULL = TRUE,
     {
@@ -23,28 +40,56 @@ server <- function(input, output, session) {
         writeLines(paste0(">Query\n", input$query), query_temp_path)
       }
       
-      #calls the blast
+      # Calls BLAST
       blast_command <- paste(input$program,
                              "-query", query_temp_path,
                              "-db", db ,
                              "-dust no",
                              "-evalue", input$eval,
-                             "-outfmt 5",
+                             "-outfmt 11",
                              "-max_hsps 1",
-                             "-max_target_seqs 10",
+                             "-max_target_seqs", input$max_target_seqs,
                              remote)
-      data <- system(blast_command, intern = TRUE)
-      xmlParse(data)
+      system(blast_command, intern = TRUE)
     })
+  
+  
+  blast_results <- eventReactive(
+    eventExpr = input$blast,
+    ignoreNULL = TRUE,
+    {
+      # Convert to XML format
+      raw_results <- raw_blast_results()
+      tmp_file <- tempfile()
+      readr::write_lines(raw_results, path = tmp_file)
+      blast_formatter_cmd <- paste("blast_formatter",
+                                   "-archive", tmp_file,
+                                   "-outfmt 5")
+      xmlParse(system(blast_formatter_cmd, intern = TRUE))
+    })
+  
 
+  blast_results_for_download <- eventReactive(
+    eventExpr = input$outfmt,
+    ignoreNULL = TRUE,
+    {
+      # Convert to XML format
+      raw_results <- raw_blast_results()
+      tmp_file <- tempfile()
+      readr::write_lines(raw_results, path = tmp_file)
+      blast_formatter_cmd <- paste("blast_formatter",
+                                   "-archive", tmp_file,
+                                   "-outfmt", stringr::str_match(input$outfmt, " *([0-9]+):.+")[, 2])
+      system(blast_formatter_cmd, intern = TRUE)
+    })
+  
   # Now to parse the results...
   parsed_results <- reactive({
     if (is.null(blast_results()))
     {
       
     } else {
-      xmltop = xmlRoot(blast_results())
-      
+
       # the first chunk is for multi-fastas
       results <- xpathApply(blast_results(), '//Iteration', function(row) {
         
@@ -130,7 +175,6 @@ server <- function(input, output, session) {
   output$clicked <- renderTable({
     if(is.null(input$blast_results_rows_selected)){}
     else{
-      xmltop <- xmlRoot(blast_results())
       clicked <- input$blast_results_rows_selected
       results <- parsed_results()
       tableout <- data.frame(results$data$tax_data[clicked,])
@@ -159,14 +203,12 @@ server <- function(input, output, session) {
       colnames(tableout) <- NULL
       data.frame(tableout)
     }
-  },rownames =T,colnames =F)
+  },rownames = TRUE,colnames = FALSE)
   
   #this chunk makes the alignments for clicked rows
   output$alignment <- renderText({
     if(is.null(input$blast_results_rows_selected)){}
     else{
-      xmltop = xmlRoot(blast_results())
-      
       clicked = input$blast_results_rows_selected
         
       #loop over the xml to get the alignments
@@ -193,5 +235,57 @@ server <- function(input, output, session) {
       return(output)
     }
   })
+  
+  # Downloadable csv of selected dataset ----
+  output$download_data <- downloadHandler(
+    contentType = "text/csv",
+    filename = function() {
+      paste0("blast_results_", format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".txt")
+    },
+    content = function(file) {
+      print("heres")
+      not_used <- readr::write_lines(blast_results_for_download(), path = file)
+    }
+  )
+  
+  output$download_data_form <- renderUI({
+    if (is.null(blast_results())) {
+    } else {
+      list(
+        h4("Download BLAST output"),
+        selectInput("outfmt", "Output format:", choices = outfmt_options, width = "300px",
+                    selected = "10: Comma-separated values"),
+        downloadButton(outputId = "download_data", label = "Download Results")
+      )
+    }
+  })
+  
+  output$hit_list <- renderUI({
+    if (is.null(blast_results())) {
+    } else {
+      list(
+        h4("Hits"),
+        DT::dataTableOutput("blast_results")
+        )
+    }
+  })
+  
+  output$hit_details <- renderUI({
+    if (is.null(blast_results())) {
+    } else {
+      if (is.null(input$blast_results_rows_selected)) {
+        return(list(
+          h4("Hit details"),
+          p("Click on a row for details...")
+        ))
+      }
+      return(list(
+        h4("Hit details"),
+        p(tableOutput("clicked")),
+        verbatimTextOutput("alignment")
+      ))
+    }
+  })
+  
 }
-#phew...
+

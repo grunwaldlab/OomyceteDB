@@ -96,3 +96,9 @@ input[type=submit]:hover {
   width: 100%;
   background-color: black;
 }
+
+.blast_shiny_frame {
+  margin-left: -30px;
+  width: 150%;
+  height: 3000px;
+}
