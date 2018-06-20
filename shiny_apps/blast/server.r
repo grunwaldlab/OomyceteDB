@@ -5,6 +5,9 @@ library(DT)
 library(metacoder)
 library(shinyjs)
 
+local_release_dir = "data/releases"
+blast_database_dir = "data/blast_databases"
+
 outfmt_options <- c(" 0: pairwise",
                     " 1: query-anchored showing identities", 
                     " 2: query-anchored no identities",
@@ -28,8 +31,8 @@ server <- function(input, output, session) {
     ignoreNULL = TRUE,
     {
       
-      # Choose database (NOT ACTUALLY CHOOSING YET)
-      db <- file.path("../../data/blast_databases", input$db)
+      # Choose database 
+      db <- file.path("..", "..", blast_database_dir, input$db)
       remote <- c("")
       
       # Format query
@@ -131,7 +134,8 @@ server <- function(input, output, session) {
       results[numeric_cols] <- lapply(results[numeric_cols], as.numeric)
       
       # Replace database index with header
-      database_seqs <- metacoder::read_fasta("../data/source/rps10_database.fa") # SHOULD BE SELECTED BY INPUT OPTION!!!
+      database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
+      database_seqs <- metacoder::read_fasta(database_path)
       results$hit_ids <- names(database_seqs)[as.numeric(results$hit_ids)]
       
       # Calculate derived columns

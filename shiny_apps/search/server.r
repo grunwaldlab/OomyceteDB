@@ -5,6 +5,9 @@ library(DT)
 library(metacoder)
 library(shinyjs)
 
+local_release_dir = "data/releases"
+blast_database_dir = "data/blast_databases"
+
 server <- function(input, output, session) {
   
   selected_subset <- eventReactive(
@@ -12,7 +15,8 @@ server <- function(input, output, session) {
     ignoreNULL = TRUE,
     {
       # Parse whole database
-      database_seqs <- metacoder::read_fasta("../../data/source/rps10_database.fa") # SHOULD BE SELECTED BY INPUT OPTION!!!
+      database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
+      database_seqs <- metacoder::read_fasta(database_path)
       tm_obj <- taxa::extract_tax_data(names(database_seqs),
                                        include_match = FALSE,
                                        class_sep = ";",
