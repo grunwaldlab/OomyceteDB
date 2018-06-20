@@ -60,8 +60,8 @@ server <- function(input, output, session) {
     else{
       results <- selected_subset()
       clicked <- input$database_list_rows_selected
-      output <- paste0(">", results$data$tax_data$input[clicked], "\n",
-                       results$data$tax_data$sequence[clicked], "\n")
+      output <- paste0(paste0(">", results$data$tax_data$input[clicked], "\n",
+                       results$data$tax_data$sequence[clicked]), collapse = "\n")
       return(output)
     }
   })
@@ -144,7 +144,7 @@ server <- function(input, output, session) {
       if (is.null(input$database_list_rows_selected)) {
         return(list(
           h4("Selected sequences"),
-          p("Click on a row to get the FASTA entry...")
+          p("Click on one or more rows to get the FASTA entry. Click again to deselect.")
         ))
       } else {
         return(list(
