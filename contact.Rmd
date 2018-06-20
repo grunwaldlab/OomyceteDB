@@ -8,22 +8,15 @@ source("style.R")
 
 ## Contact information
 
-**Primary contact:**
+**Niklaus Grunwald**
+Horticultural Crops Research Lab,USDA ARS
+3420 Orchard Ave. Corvallis, OR 97330, USA
+Tel: 541-738-4049
 
-Niklaus Grunwald
-
-**Address:**
-
-USDA ARS, Horticultural Crops Research Lab,
-34032 Orchard Ave. Corvallis, OR 97330, USA
-
-**Telephone:**
-
-541-738-4049
-
-**Fax:**
-
-541-738-4025
+**Frank Martin**
+Crop Improvement and Protection Research, USDA ARS
+Salinas, CA 93905
+Tel: 831-755-2873
 
 ## Send us an email
 
