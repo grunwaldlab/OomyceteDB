@@ -102,3 +102,20 @@ input[type=submit]:hover {
   width: 130%;
   height: 2500px;
 }
+
+
+.footer_section {
+  background-color: #DDDDDD;
+  position: absolute;
+  left: 0;
+  bottom: auto;
+  width: 100%;
+  
+}
+
+.footer_content {
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  margin: 15px 0 15px 0;
+}

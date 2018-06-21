@@ -7,21 +7,10 @@ output: html_document
 source("style.R")
 ```
 
-## Current release
 
-This is the most recent release of OomyceteDB.
+**The application below might take a few seconds to load**
 
-### Recent changes
+<iframe class = "shiny_frame" src="http://127.0.0.1:3838/shiny_apps/download" frameBorder="0">
+</iframe>
 
-> News for current release
-
-### Generic
-
-### QIIME
-
-### Mothur
-
-### USEARCH/VSEARCH
-
-## Archived releases
 
