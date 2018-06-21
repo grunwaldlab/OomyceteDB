@@ -43,10 +43,17 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 taxa_in_table <- c("Phytophthora", "Pythium", "Phytopythium", "Achlya", "Albugo", "Peronospora", "Plasmopara", "Saprolegnia")
-obj %>%
+genus_table <- obj %>%
   filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
   get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
-  filter(taxon_names %in% taxa_in_table) %>%
+  filter(taxon_names %in% taxa_in_table)
+  
+
+genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
+                                       "**Total**",
+                                       paste0("**", sum(genus_table$n_subtaxa), "**")))
+
+genus_table %>%
   transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
