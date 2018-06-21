@@ -1,5 +1,5 @@
 ---
-title: "Downloads"
+title: "Download the database"
 output: html_document
 ---
 
@@ -7,6 +7,8 @@ output: html_document
 source("style.R")
 ```
 
+You can download the entire database here as well as any past releases.
+Click on a row to see the download button.
 
 **The application below might take a few seconds to load**
 

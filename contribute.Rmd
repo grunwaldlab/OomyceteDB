@@ -7,5 +7,6 @@ output: html_document
 source("style.R")
 ```
 
-
-> A Form to fill out to contribute sequences
+We welcome any contributions of sequences from well-identified isolates.
+The success of RPS10 as a barcode locus will depend on the coverage of databases and any others like it.
+We might have a forum here for you to fill out eventually, but for now please email us to discuss potential contributions.

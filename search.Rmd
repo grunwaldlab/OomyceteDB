@@ -7,6 +7,10 @@ output: html_document
 source("style.R")
 ```
 
+Here you can subset/search the database and download part of it or even just a few selected sequences.
+Without setting any taxon, the whole database will be displayed and can be downloaded.
+You can also download the whole database [here](download.html).
+
 **The application below might take a few seconds to load**
 
 <iframe class = "shiny_frame" src="http://127.0.0.1:3838/shiny_apps/search" frameBorder="0">
