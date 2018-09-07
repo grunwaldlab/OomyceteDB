@@ -5,6 +5,9 @@ library(DT)
 library(metacoder)
 library(shinyjs)
 
+local_release_dir = "data/releases"
+blast_database_dir = "data/blast_databases"
+
 server <- function(input, output, session) {
   
   selected_subset <- eventReactive(
@@ -12,7 +15,8 @@ server <- function(input, output, session) {
     ignoreNULL = TRUE,
     {
       # Parse whole database
-      database_seqs <- metacoder::read_fasta("../../data/source/rps10_database.fa") # SHOULD BE SELECTED BY INPUT OPTION!!!
+      database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
+      database_seqs <- metacoder::read_fasta(database_path)
       tm_obj <- taxa::extract_tax_data(names(database_seqs),
                                        include_match = FALSE,
                                        class_sep = ";",
@@ -60,8 +64,8 @@ server <- function(input, output, session) {
     else{
       results <- selected_subset()
       clicked <- input$database_list_rows_selected
-      output <- paste0(">", results$data$tax_data$input[clicked], "\n",
-                       results$data$tax_data$sequence[clicked], "\n")
+      output <- paste0(paste0(">", results$data$tax_data$input[clicked], "\n",
+                       results$data$tax_data$sequence[clicked]), collapse = "\n")
       return(output)
     }
   })
@@ -144,7 +148,7 @@ server <- function(input, output, session) {
       if (is.null(input$database_list_rows_selected)) {
         return(list(
           h4("Selected sequences"),
-          p("Click on a row to get the FASTA entry...")
+          p("Click on one or more rows to get the FASTA entry. Click again to deselect.")
         ))
       } else {
         return(list(

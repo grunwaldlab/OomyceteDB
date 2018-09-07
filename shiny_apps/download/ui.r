@@ -34,21 +34,12 @@ ui <- fluidPage(
   includeCSS("www/style.css"),
   
   mainPanel(
-    h3("Subsetting options"),
-    selectInput("db", "Database:", choices = get_blast_databases(file.path("..", "..", blast_database_dir)), width = option_width),
-    textInput("taxon_subset", "Taxa to subset the database to:", value = "",
-              placeholder = "pythium, phytophthora, Albuginaceae, etc ...", width = "500px"),
-    br(),
-    actionButton("search", "Search database")
+    DT::dataTableOutput("database_list")
   ),
   
   
   mainPanel(
-    h3("Results"),
-    # DT::dataTableOutput("database_list"),
-    uiOutput("seq_list_table"),
-    uiOutput("download_data_form"),
-    uiOutput("seq_details")
+    uiOutput("download_data_form")
   )
   
   

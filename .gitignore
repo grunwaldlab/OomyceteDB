@@ -5,3 +5,5 @@
 website
 *_cache
 *_files
+.httr-oauth
+data/*

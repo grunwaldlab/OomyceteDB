@@ -1,19 +1,20 @@
 ---
+title: Rps10, a new barcode with high specificity and sensitivity for oomycetes
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 source("style.R")
+source("tools.R")
+source("configuration.R")
 ```
-
-# *Rps10*, a new barcode with high specificity and sensitivity for oomycetes
 
 This site provides references sequences that can be used to identify oomycetes using the mitochondrial *rps10* locus and some basic tools to identify *rps10* sequences from unidentified oomycetes.
 The following heat-tree shows the species currently represented in the database and the number of species.
 
 ```{r}
 library(metacoder)
-seqs <- ape::read.FASTA("data/source/rps10_database.fa")
+seqs <- ape::read.FASTA(get_latest_release_fa())
 obj <- extract_tax_data(names(seqs),
                         key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
                         regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
@@ -42,10 +43,17 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 taxa_in_table <- c("Phytophthora", "Pythium", "Phytopythium", "Achlya", "Albugo", "Peronospora", "Plasmopara", "Saprolegnia")
-obj %>%
+genus_table <- obj %>%
   filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
   get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
-  filter(taxon_names %in% taxa_in_table) %>%
+  filter(taxon_names %in% taxa_in_table)
+  
+
+genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
+                                       "**Total**",
+                                       paste0("**", sum(genus_table$n_subtaxa), "**")))
+
+genus_table %>%
   transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
@@ -53,11 +61,3 @@ obj %>%
 ```
 
 
-### How to cite
-
-Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., ..., and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.
-
-### Disclaimer statement
-
-Data on this website is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.
-In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this data, even if advised of the possibility of such damage.

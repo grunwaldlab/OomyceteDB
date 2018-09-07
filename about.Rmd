@@ -1,5 +1,5 @@
 ---
-title: "OomyceteDB"
+title: "About"
 output: html_document
 ---
 
@@ -7,12 +7,39 @@ output: html_document
 source("style.R")
 ```
 
-## Diclaimmer
 
 ## Contributers
 
-## Our papers/poster ?
+
+
+## Acknowledgments
+
+
+
+## How to cite
+
+Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., ..., and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.
+
 
 ## License
 
-## Aknowlgdments
+This site and the data hosted here is licensed as [Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+
+
+## How to cite
+
+Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., ..., and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.
+
+
+## Disclaimer statement
+
+Data on this website is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed.
+In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this data, even if advised of the possibility of such damage.
+
+## How this site is made
+
+This site is a combination of static [R Markdown](https://rmarkdown.rstudio.com/rmarkdown_websites.html) content and dynamic [R Shiny](https://shiny.rstudio.com/) applications. The source code for the website can be found here:
+
+https://github.com/grunwaldlab/OomyceteDB
+
+For those that want to set up a similar site based on this one, keep you will need a web server like Apache and an instance of the [R Shiny Server](https://www.rstudio.com/products/shiny/shiny-server/) running. We also store and manage the raw data on Google Drive for convenience.
