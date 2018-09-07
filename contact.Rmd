@@ -9,7 +9,7 @@ source("style.R")
 ## Contact information
 
 **Niklaus Grunwald**
-Horticultural Crops Research Lab,USDA ARS
+Horticultural Crops Research Lab, USDA ARS
 3420 Orchard Ave. Corvallis, OR 97330, USA
 Tel: 541-738-4049
 
