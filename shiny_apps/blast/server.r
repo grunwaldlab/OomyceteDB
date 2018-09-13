@@ -2,7 +2,7 @@ require(XML)
 library(plyr)
 library(dplyr)
 library(DT)
-library(metacoder)
+library(taxa)
 library(shinyjs)
 
 local_release_dir = "data/releases"
