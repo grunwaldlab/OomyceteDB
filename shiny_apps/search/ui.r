@@ -6,6 +6,9 @@ local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
 option_width <- "130px"
 
+options(shiny.sanitize.errors = FALSE)
+
+
 get_blast_databases <- function(db_dir) {
   # Get possible blast database names
   db_file_names <- tools::file_path_sans_ext(list.files(db_dir))

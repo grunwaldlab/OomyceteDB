@@ -8,6 +8,8 @@ library(shinyjs)
 local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
 
+options(shiny.sanitize.errors = FALSE)
+
 server <- function(input, output, session) {
   
 

@@ -2,6 +2,9 @@ library(shinythemes)
 library(DT)
 library(shinyjs)
 
+options(shiny.sanitize.errors = FALSE)
+
+
 local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
 
