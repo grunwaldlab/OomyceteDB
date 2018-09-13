@@ -1,4 +1,4 @@
-googledrive_root_id <- "1rGCmpaRxNyNLXoBuqgEojcDeI2f7G4uE"
+googledrive_root_id <- "https://drive.google.com/drive/u/1/folders/1XJLFW_S9EzVOGgHCqg42H88dNtD91gRq"
 release_spreadsheet_name <- "releases"
 local_release_spreadsheet_path = "data/releases.csv"
 release_name_prefix = "release_"
