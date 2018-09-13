@@ -2,8 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
-website
 *_cache
 *_files
 .httr-oauth
 data/*
+website/data
+website/scripts
+website/shiny_apps
