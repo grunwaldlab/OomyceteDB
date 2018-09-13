@@ -26,20 +26,40 @@ outfmt_options <- c(" 0: pairwise",
 
 server <- function(input, output, session) {
   
+  check_blast_input <- eventReactive(
+    eventExpr = input$blast,
+    ignoreNULL = TRUE,
+    {
+      if (input$query == "") {
+        return("Please enter a query sequence in FASTA format to run BLAST.")
+      }
+      if (nchar(input$query) > 100000) {
+        return("Query is too large for our servers. Please download the database and run BLAST on your computer instead.")
+      }
+      return("OK")
+    }
+  )
   
+  observeEvent(
+    eventExpr = input$blast,
+    {
+      check_results <- check_blast_input()
+      if (check_results != "OK") {
+        showNotification(check_results)
+      }
+      # validate(need(check_results == "OK", message = check_results))
+    }
+  )
   
   raw_blast_results <- eventReactive(
     eventExpr = input$blast,
     ignoreNULL = TRUE,
     {
-      # Check sequence input
-      validate(
-        need(input$query != "", "Please enter a query sequence in FASTA format to run BLAST.")
-      )
-      validate(
-        need(nchar(input$query) < 100000, "Query is too large for our servers. Please download the database and run BLAST on your computer instead.")
-      )
-      
+      # Check input
+      if (check_blast_input() != "OK") {
+        return(NULL)
+      }
+
       # Choose database 
       db <- file.path("..", "..", blast_database_dir, input$db)
       remote <- c("")
@@ -68,6 +88,8 @@ server <- function(input, output, session) {
   
   blast_results <- reactive(
     {
+      req(raw_blast_results())
+      
       # Convert to XML format
       raw_results <- raw_blast_results()
       tmp_file <- tempfile()
