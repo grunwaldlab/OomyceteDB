@@ -74,6 +74,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 mainPanel(
                   h3("Results"),
                   # h4("Download BLAST output"),
+                  textOutput("no_hits"),
                   uiOutput("download_data_form"),
                   uiOutput("hit_list"),
                   uiOutput("hit_details")
