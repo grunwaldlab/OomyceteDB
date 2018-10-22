@@ -9,6 +9,10 @@ source("tools.R")
 source("configuration.R")
 ```
 
+<font color="red">
+> **This website is currently under development. Please do not use.**
+</font>
+
 **OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
 *rps10* is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes.
 The curated database can be downloaded or queried using BLAST.
