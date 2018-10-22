@@ -43,7 +43,7 @@ obj %>%
             node_color_axis_label = "Number of sequences")
 ```
 
-Table: Species per genus currently included in **OomyceteDB**:
+The following table shows the species per genus currently included in **OomyceteDB**:
 
 ```{r}
 library(dplyr)

@@ -19,9 +19,9 @@ source("style.R")
 ### Rps10 database
 
 - Frank Martin
-- Val Fieland, Nik Grunwald
+- Val Fieland & Nik Grunwald
 - Hai Nguyen
-
+- Treena Burgess
 
 ### Rps10 barcode primer design and validation
 
@@ -33,6 +33,7 @@ source("style.R")
 
 ## Acknowledgments
 
+We appreciate the support of Chris Sullivan and the Center for Genome Research and Biocomputing (CGRB) at Oregon State University. 
 
 ## License
 
