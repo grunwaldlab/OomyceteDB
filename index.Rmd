@@ -1,5 +1,5 @@
 ---
-title: Rps10, a new barcode with high specificity and sensitivity for oomycetes
+title: Rps10, a molecular barcode with high sensitivity and specificity for oomycetes
 output: html_document
 ---
 
@@ -9,8 +9,10 @@ source("tools.R")
 source("configuration.R")
 ```
 
-This site provides references sequences that can be used to identify oomycetes using the mitochondrial *rps10* locus and some basic tools to identify *rps10* sequences from unidentified oomycetes.
-The following heat-tree shows the species currently represented in the database and the number of species.
+**OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
+*rps10* is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes.
+The curated database can be downloaded or queried using BLAST.
+The following heat-tree shows the species currently represented in the database:
 
 ```{r}
 library(metacoder)
@@ -36,7 +38,7 @@ obj %>%
             node_color_axis_label = "Number of sequences")
 ```
 
-### Current coverage of species per genus in the oomycetes
+Table: Species per genus currently included in **OomyceteDB**:
 
 ```{r}
 library(dplyr)
