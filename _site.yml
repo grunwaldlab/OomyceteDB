@@ -1,6 +1,6 @@
 name: oomyceteDB
 navbar:
-  title: Oomycete database
+  title: OomyceteDB
   left:
   - text: BLAST
     href: blast.html
