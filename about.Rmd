@@ -7,7 +7,6 @@ output: html_document
 source("style.R")
 ```
 
-
 ## Contributors
 
 ### Website
@@ -35,16 +34,13 @@ source("style.R")
 ## Acknowledgments
 
 
-
 ## License
 
 This site and the data hosted here is licensed as [Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
 
-
 ## How to cite
 
 Albornoz, F., Martin, F. N., Foster, Z. l. L., Fieland, V. J., Larsen, M. M., Jones, F. A., Tyler, B. M., ..., and Grünwald, N. J. 2018. Rps10, a new barcode for high throughput amplicon sequencing specific for Oomycetes. BioRxiv, submitted. DOI: XXX.
-
 
 ## Disclaimer statement
 
