@@ -4,12 +4,8 @@ navbar:
   left:
   - text: BLAST
     href: blast.html
-  - text: Search
-    href: search.html
   - text: Download
-    href: download.html
-  - text: Contribute
-    href: contribute.html
+    href: search.html
   - text: About
     href: about.html
   - text: FAQ
