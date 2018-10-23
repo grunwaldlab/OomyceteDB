@@ -54,4 +54,4 @@ This site is a combination of static [R Markdown](https://rmarkdown.rstudio.com/
 
 https://github.com/grunwaldlab/OomyceteDB
 
-For those that want to set up a similar site based on this one, keep you will need a web server like Apache and an instance of the [R Shiny Server](https://www.rstudio.com/products/shiny/shiny-server/) running. We also store and manage the raw data on Google Drive for convenience.
+To set up a similar site, you will need a web server like Apache and an instance of the [R Shiny Server](https://www.rstudio.com/products/shiny/shiny-server/) running. We store and manage the raw data on Google Drive for convenience. [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi ) also needs to be enabled. 
