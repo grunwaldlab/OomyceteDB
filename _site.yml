@@ -1,15 +1,11 @@
-name: my-website
+name: oomyceteDB
 navbar:
   title: OomyceteDB
   left:
   - text: BLAST
     href: blast.html
-  - text: Search
+  - text: Download
     href: search.html
-#  - text: Download
-#    href: download.html
-  - text: Contribute
-    href: contribute.html
   - text: About
     href: about.html
   - text: FAQ
