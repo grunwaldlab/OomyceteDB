@@ -1,0 +1,55 @@
+---
+title: "Rps10 database sequence PCR protocol"
+output:
+  html_document: default
+  pdf_document:
+    latex_engine: xelatex
+mainfont: Arial
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+*Updated October 2018*
+
+
+**The purpose of the rps10 database amplicon protocol is to amplify the oomycete rps10 locus for use in the rps10 barcode database. If you want to use the Rps10 locus for amplicon metagenomics, use the Illumina metabarcoding protocol instead.**
+The rps10 database amplicon is longer than the rps10 locus-specific amplicon and conveniently includes the rps10 locus-specific primer sequences.
+
+
+## Ordering rps10 database primers
+
+Rps10 database oligos were designed by Frank Martin and modified by Val Fieland and are listed here in the 5′ -> 3′ orientation
+Both the rps10 forward and reverse database primer binding sites have two SNPs represented with IUPAC codes (Y=C,T and R=A, G). 
+We ordered the Rps10 database oligos from Life technologies, but other sources will probably work as well. 
+
+```{r}
+custom_kable(tibble(
+  "Primer name" = c("Prv9r-M (FORWARD)", "Prv9f-M (REVERSE)"),
+  "Forward Primer sequence" = c("GTTGGTTAGAGYARAAGACT", "RTAYACTCTAACCAACTGAGT")
+))
+```
+
+## Rps10 database PCR mixture
+
+```{r}
+custom_kable(read_tsv("tables/database_pcr_recipe.tsv"))
+```
+
+Notes:
+
+* GenScript Taq and 10x buffer from GenScript (Cat. No. Cat. No. E00007)
+* 25mM MgCl2 from USB (Cat. No 71167)
+* 100mM dNTP from Invitrogen (Cat. No 10297-018)
+
+
+## Rps10 database thermocycler conditions
+
+```{r}
+custom_kable(read_tsv("tables/database_pcr_thermocycler_profile.tsv"))
+```
+
+Notes:
+
+* Rps10 database amplicon size ≈ 554bp

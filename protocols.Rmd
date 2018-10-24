@@ -1,0 +1,14 @@
+---
+title: "Lab protocols for Rps10"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+
+
+

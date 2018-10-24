@@ -1,0 +1,71 @@
+---
+title: "Rps10 metabarcoding primer ordering and mixing protocol"
+output:
+  html_document: default
+  pdf_document:
+    latex_engine: xelatex
+mainfont: Arial
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+*Updated October 2018*
+
+The propose of the rps10 locus-specific protocol is to amplify the oomycete rps10 locus for metagenomic research.
+
+
+## Ordering rps10 locus-specific primers
+
+Rps10 oligos were designed by Frank Martin and Val Fieland and are listed here in the 5' -> 3' orientation
+Both the rps10 forward and reverse primer binding sites have SNPs.
+To reduce the amount of primer degeneracy in the rps10 locus-specific PCR reaction it is advisable to order multiple specific oligo sequences for the reverse primer sequences rather than ordering oligos with IUPAC ambiguity codes.
+Using the IUPAC code Y (C,T) for the rps10_F_Conserved oligo is optional but simplifies the primer mixture step. 
+
+## Rps10 locus-specific forward primers
+
+* before space = Forward 5' Illumina overhang adapter sequence
+* after space  = Rps10 locus-specific forward primer
+
+```{r}
+custom_kable(tibble(
+  "Primer name" = c("rps10_F_Conserved", "rps10_F2_Conserved"),
+  "Forward Primer sequence" = c("TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG GTTGGTTAGAGYAAAAGACT",
+                                "TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG GTTGGTTAGAGTAGAAGACT")
+))
+```
+
+
+## Rps10 locus-specific reverse primers
+
+* before space = Reverse 5' Illumina overhang adapter sequence)
+* after space  = Rps10 locus-specific reverse primer
+
+```{r}
+custom_kable(tibble(
+  "Primer name" = paste0("rps10_R", 1:7),
+  "Forward Primer sequence" = c("GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGATTTGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATACTTAGAAAGATTTGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGACTTGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGACTCGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCCTAGAAAGACTCGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGTTTAGAAAGATTCGAACT",
+                                "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGATTCGAACT")
+))
+```
+
+
+## Rps10 locus-specific primer mixture
+
+```{r}
+custom_kable(read_tsv("tables/metabarcoding_primer_mixing.tsv"))
+```
+
+Notes:
+
+* We ordered the Rps10 locus-specific oligos from Life technologies, but other sources will probably work just as well.
+* The TE Buffer (Tris-EDTA) is a 1X Solution, pH 8.0, Molecular Biology Grade (Cat. No. BP2473100 )
+* The two primers represented by rps10_F_Conserved each have a final concentration of 2.0µM
+
+
