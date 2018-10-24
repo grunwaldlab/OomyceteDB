@@ -5,5 +5,7 @@ utils
 grDevices
 graphics
 stats
+googledrive
+googlesheets
 taxa
 metacoder

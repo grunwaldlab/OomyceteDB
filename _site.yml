@@ -6,8 +6,8 @@ navbar:
     href: blast.html
   - text: Search
     href: search.html
-  - text: Download
-    href: download.html
+#  - text: Download
+#    href: download.html
   - text: Contribute
     href: contribute.html
   - text: About

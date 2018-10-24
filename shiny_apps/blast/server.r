@@ -193,6 +193,7 @@ server <- function(input, output, session) {
     results$hit_ids <- names(database_seqs)[as.numeric(results$hit_ids)]
     
     # Calculate derived columns
+    results$hit_index <- seq_len(nrow(results))
     results$prop_identity <- results$identity / results$align_len
     results$prop_match_len <- (results$query_to - results$query_from + 1) / results$query_len
     
@@ -224,6 +225,22 @@ server <- function(input, output, session) {
     
   })
   
+  selected_query_hit_table <- reactive({
+    # Check that blast results are available
+    my_parsed_results <- req(parsed_results())
+    hit_data <- my_parsed_results$data$tax_data
+    
+    # Get the hit id that is clicked
+    clicked_index <- input$blast_results_rows_selected
+    hit_selected <- hit_data$hit_ids[clicked_index]
+    
+    # Subset data for query 
+    query_selected <- hit_data$query_id[clicked_index]
+    hit_data <- filter(hit_data, query_id == query_selected)
+    
+    return(hit_data)
+  })
+  
   # Make hit plot
   output$hit_plot <- renderPlot({
     # Check that blast results are available
@@ -252,33 +269,45 @@ server <- function(input, output, session) {
     hit_data$color_interval <- cut(hit_data$score,
                                    breaks = c(-99999, 40, 50, 80, 200, 99999),
                                    labels = c("<40", "40-50", "50-80", "80-200", ">=200"))
-    
+    hit_data <- mutate(hit_data,
+                       start = query_from - hit_from + 1,
+                       end = query_to + (hit_length - hit_to))
+
+    # Get data for mismatches
     mismatches <- lapply(str_locate_all(hit_data$midline, " +"), as.data.frame)
     align_data <- do.call(bind_rows, mismatches)
     align_data$y <- rep(hit_data$y, sapply(mismatches, nrow))
+    gap_correction <- rep((hit_data$align_len - hit_data$gaps) / hit_data$align_len, sapply(mismatches, nrow))
+    align_data$start <- align_data$start * gap_correction + rep(hit_data$query_from, sapply(mismatches, nrow)) - 1
+    align_data$end <- align_data$end * gap_correction + rep(hit_data$query_from, sapply(mismatches, nrow)) - 1
     
-    # plot
+    # Get data for highlight
     x_min <- min(hit_data$query_from)
     x_max <- max(hit_data$query_to)
+    highlight_data <- data.frame(x = x_min, xend = x_max, y = - which(hit_data$hit_ids == hit_selected))
+    
+    # Get data for query
+    query_data <- data.frame(x = 1, xend = hit_data$query_len[1], y = 0)
+    
+    # plot
     ggplot() +
-      geom_segment(data = data.frame(x = x_min, xend = x_max, y = - which(hit_data$hit_ids == hit_selected)),
-                   aes(x = x, xend = xend,
-                       y = y, yend = y), colour = "yellow", size = 5) +
+      geom_segment(data = highlight_data,
+                   aes(x = x, xend = xend, y = y, yend = y),
+                   colour = "yellow", size = 5) +
       geom_segment(data = hit_data,
-                   aes(x = query_from, xend = query_to,
-                       y = y, yend = y,
-                       colour = color_interval), size = 2) +
+                   aes(x = start, xend = end, y = y, yend = y, colour = color_interval),
+                   size = 2) +
       scale_colour_manual(values = c("#000000", "#0000ff", "#00ff00", "#ff00ff", "#ff0000"),
                           labels = c("<40", "40-50", "50-80", "80-200", ">=200"), 
                           drop = FALSE) +
-      geom_segment(data = data.frame(x = hit_data$query_from[1], xend = hit_data$query_len[1], y = 0),
-                   aes(x = x, xend = xend,
-                       y = y, yend = y), colour = "#58c7c7", size = 5) +
+      geom_segment(data = query_data,
+                   aes(x = x, xend = xend, y = y, yend = y),
+                   colour = "#58c7c7", size = 5) +
       geom_segment(data = align_data,
                    aes(x = start - 0.5, xend = end + 0.5,
                        y = y, yend = y), color = "black", size = 4) + 
       guides(colour = guide_legend(title = "Alignment scores:")) +
-      scale_x_continuous(position = "top", limits = c(0, hit_data$query_len[1])) + 
+      scale_x_continuous(position = "top") + 
       ggtitle(plot_title) +
       theme(legend.position = "top",
             axis.line.y = element_blank(),
@@ -454,11 +483,26 @@ server <- function(input, output, session) {
     }
     return(list(
       h4("Hit details"),
-      plotOutput("hit_plot"),
+      plotOutput("hit_plot", click = "clicked_position"),
       p(tableOutput("clicked")),
       verbatimTextOutput("alignment")
     ))
     
+  })
+  
+  observe({
+    req(input$clicked_position)
+    
+    # Get index of hit that was clicked on
+    pos_data <- input$clicked_position
+    row_index <- abs(round(pos_data$y))
+    hit_index <- selected_query_hit_table()$hit_index[row_index]
+
+    # Select the row in the hit table
+    if (! is.null(hit_index) && hit_index %in% seq_len(nrow(parsed_results()$data$tax_data))) {
+      dt_proxy <- dataTableProxy("blast_results")
+      selectRows(dt_proxy, hit_index)
+    }
   })
   
 }

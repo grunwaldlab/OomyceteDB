@@ -1,5 +1,5 @@
 ---
-title: Rps10, a new barcode with high specificity and sensitivity for oomycetes
+title: Rps10, a barcode with high specificity and sensitivity for oomycetes
 output: html_document
 ---
 
@@ -9,8 +9,8 @@ source("tools.R")
 source("configuration.R")
 ```
 
-This site provides references sequences that can be used to identify oomycetes using the mitochondrial *rps10* locus and some basic tools to identify *rps10* sequences from unidentified oomycetes.
-The following heat-tree shows the species currently represented in the database and the number of species.
+This site provides basic data analysis tools that allow users to find regions of similarity between a query *rps10* sequence and a curated oomycete *rps10* database.
+The following heat-tree provides a diagrammatic summary of both the specific oomycetes currently in the database and their amounts.
 
 ```{r}
 library(metacoder)
@@ -54,6 +54,7 @@ genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"
                                        paste0("**", sum(genus_table$n_subtaxa), "**")))
 
 genus_table %>%
+  arrange(desc(as.numeric(n_subtaxa))) %>%
   transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 

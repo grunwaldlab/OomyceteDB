@@ -40,7 +40,7 @@ ui <- fluidPage(
     h3("Subsetting options"),
     selectInput("db", "Database:", choices = get_blast_databases(file.path("..", "..", blast_database_dir)), width = option_width),
     textInput("taxon_subset", "Taxa to subset the database to:", value = "",
-              placeholder = "pythium, phytophthora, Albuginaceae, etc ...", width = "500px"),
+              placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
     br(),
     actionButton("search", "Search database")
   ),
