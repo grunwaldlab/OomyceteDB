@@ -2,10 +2,10 @@ name: oomyceteDB
 navbar:
   title: OomyceteDB
   left:
-  - text: BLAST
-    href: blast.html
   - text: Download
     href: search.html
+  - text: BLAST
+    href: blast.html
   - text: Protocols
     href: protocols.html
   - text: About

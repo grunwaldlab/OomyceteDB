@@ -11,8 +11,6 @@ Here you can find the lab protocols for using the Rps10 barcode for amplicon met
 Note that the primers used to generate amplicons short enough for high-throughput sequencing are not the same as those used to generate the database.
 Make sure you are using the correct protocol for you goals.
 
-Rps10 oligos were designed by Frank Martin and Val Fieland.
-
 ## Metagenomics protocols
 
 These relate to using the Rps10 barcode for metagenomics research.

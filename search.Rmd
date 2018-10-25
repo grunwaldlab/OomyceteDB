@@ -7,12 +7,12 @@ output: html_document
 source("style.R")
 ```
 
-Here you can subset/search the database and download part of it or even just a few selected sequences.
+Here you can downloade the whole database or just a part of it.
 Without setting any taxon, the whole database will be displayed and can be downloaded.
 You can also download the whole database [here](download.html).
 
 **The application below might take a few seconds to load**
 
-<iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB/search" frameBorder="0">
+<iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/search" frameBorder="0">
 </iframe>
 

@@ -30,10 +30,11 @@ source("style.R")
 - Val Fieland
 - Meg Larsen
 - Nik Grunwald
+- Frank Martin
 
 ## Acknowledgments
 
-We appreciate the support of Chris Sullivan and the Center for Genome Research and Biocomputing (CGRB) at Oregon State University. 
+We appreciate the support of Chris Sullivan and the Center for Genome Research and Biocomputing (CGRB) at Oregon State University for help getting this website online. 
 
 ## License
 
@@ -54,4 +55,6 @@ This site is a combination of static [R Markdown](https://rmarkdown.rstudio.com/
 
 https://github.com/grunwaldlab/OomyceteDB
 
-To set up a similar site, you will need a web server like Apache and an instance of the [R Shiny Server](https://www.rstudio.com/products/shiny/shiny-server/) running. We store and manage the raw data on Google Drive for convenience. [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi ) also needs to be enabled. 
+To set up a similar site, you will need a web server like Apache and an instance of the [R Shiny Server](https://www.rstudio.com/products/shiny/shiny-server/) running.
+We store and manage the raw data on Google Drive for convenience.
+[BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi ) also needs to be installed. 
