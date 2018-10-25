@@ -6,6 +6,8 @@ navbar:
     href: blast.html
   - text: Download
     href: search.html
+  - text: Protocols
+    href: protocols.html
   - text: About
     href: about.html
   - text: FAQ

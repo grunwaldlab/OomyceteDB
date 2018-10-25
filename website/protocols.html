@@ -11,7 +11,7 @@
 
 
 
-<title>Rps10, a molecular barcode with high sensitivity and specificity for oomycetes</title>
+<title>Lab protocols for Rps10</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
@@ -197,134 +196,35 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Rps10, a molecular barcode with high sensitivity and specificity for oomycetes</h1>
+<h1 class="title toc-ignore">Lab protocols for Rps10</h1>
 
 </div>
 
 
-<p><font color="red"> <strong>This website is currently under development. Please do not use.</strong> </font></p>
-<p><strong>OomyceteDB</strong> provides quality-controlled, aligned and annotated Oomycete <em>rps10</em> sequences. <em>rps10</em> is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes. The curated database can be downloaded or queried using BLAST. We invite all memebers of the oomycete community to contribute sequences for new Oomcyete species. The following heat-tree shows the species currently represented in the database:</p>
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
-<p>The following table shows the species per genus currently included in <strong>OomyceteDB</strong>:</p>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Genus
-</th>
-<th style="text-align:left;">
-Number of species
-</th>
-<th style="text-align:left;">
-Number of sequences
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Phytophthora
-</td>
-<td style="text-align:left;">
-75
-</td>
-<td style="text-align:left;">
-187
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Pythium
-</td>
-<td style="text-align:left;">
-32
-</td>
-<td style="text-align:left;">
-45
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Peronospora
-</td>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-195
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Phytopythium
-</td>
-<td style="text-align:left;">
-8
-</td>
-<td style="text-align:left;">
-15
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Plasmopara
-</td>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-15
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Saprolegnia
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Achlya
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Albugo
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-17
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-<strong>Total</strong>
-</td>
-<td style="text-align:left;">
-<strong>135</strong>
-</td>
-<td style="text-align:left;">
-<strong>481</strong>
-</td>
-</tr>
-</tbody>
-</table>
-<div id="funding" class="section level2">
-<h2>Funding</h2>
-<p><strong>OomyceteDB</strong> was supported by NSF (<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1542681">1542681</a>) USDA ARS (<a href="https://www.ars.usda.gov/research/project/?accnNo=432469">2072-22000-041-00-D</a>, <a href="https://www.ars.usda.gov/research/project/?accnNo=431470">2038-22000-016-00-D</a>).</p>
+<p>Here you can find the lab protocols for using the Rps10 barcode for amplicon metagenomics (aka metabarcoding) and generating sequences to contribute to the database. Note that the primers used to generate amplicons short enough for high-throughput sequencing are not the same as those used to generate the database. Make sure you are using the correct protocol for you goals.</p>
+<p>Rps10 oligos were designed by Frank Martin and Val Fieland.</p>
+<div id="metagenomics-protocols" class="section level2">
+<h2>Metagenomics protocols</h2>
+<p>These relate to using the Rps10 barcode for metagenomics research.</p>
+<div id="rps10-metabarcoding-primer-ordering-and-mixing" class="section level4">
+<h4>Rps10 metabarcoding primer ordering and mixing</h4>
+<p>This protocol is used to prepare PCR primers for the rps10 locus for metabarcoding.</p>
+<p><a href="protocols/metagenomics_primer_protocol.html" class="btn btn-success" role="button">View as HTML</a> <a href="protocols/metagenomics_primer_protocol.pdf" class="btn btn-info" role="button">View as PDF</a></p>
+</div>
+<div id="rps10-locus-specific-illumina-amplicon-pcr" class="section level4">
+<h4>Rps10 Locus-specific Illumina Amplicon PCR</h4>
+<p>This protocol is used to PCR amplify the Rps10 locus for use in amplicon metagenomics research.</p>
+<p><a href="protocols/metagenomics_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a> <a href="protocols/metagenomics_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a></p>
+</div>
+</div>
+<div id="database-protocols" class="section level2">
+<h2>Database protocols</h2>
+<p>These relate to generating sequences to contribute to the Rps10 reference database hosted on this website.</p>
+<div id="rps10-database-sequence-pcr-protocol" class="section level4">
+<h4>Rps10 database sequence PCR protocol</h4>
+<p>This protocol is used to generate sequences for the Rps10 reference database.</p>
+<p><a href="protocols/database_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a> <a href="protocols/database_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a></p>
+</div>
 </div>
 
 <div class="footer_section">

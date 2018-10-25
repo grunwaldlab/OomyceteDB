@@ -1,14 +1,47 @@
 ---
 title: "Lab protocols for Rps10"
-output:
-  html_document: default
-  pdf_document: default
+output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 source("style.R")
 ```
 
+Here you can find the lab protocols for using the Rps10 barcode for amplicon metagenomics (aka metabarcoding) and generating sequences to contribute to the database.
+Note that the primers used to generate amplicons short enough for high-throughput sequencing are not the same as those used to generate the database.
+Make sure you are using the correct protocol for you goals.
+
+Rps10 oligos were designed by Frank Martin and Val Fieland.
+
+## Metagenomics protocols
+
+These relate to using the Rps10 barcode for metagenomics research.
+
+#### Rps10 metabarcoding primer ordering and mixing
+
+This protocol is used to prepare PCR primers for the rps10 locus for metabarcoding.
+
+<a href="protocols/metagenomics_primer_protocol.html" class="btn btn-success" role="button">View as HTML</a>
+<a href="protocols/metagenomics_primer_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
+
+
+#### Rps10 Locus-specific Illumina Amplicon PCR
+
+This protocol is used to PCR amplify the Rps10 locus for use in amplicon metagenomics research.
+
+<a href="protocols/metagenomics_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a>
+<a href="protocols/metagenomics_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
+
+## Database protocols
+
+These relate to generating sequences to contribute to the Rps10 reference database hosted on this website.
+
+#### Rps10 database sequence PCR protocol
+
+This protocol is used to generate sequences for the Rps10 reference database.
+
+<a href="protocols/database_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a>
+<a href="protocols/database_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
 
 
 
