@@ -8,9 +8,9 @@ source("style.R")
 ```
 
 
-You can run BLAST to align your own sequences against the OomyceteDB RPS10 database here.
-This blast will be run on our servers and we have limited resources.
-For large or numerous blast runs, we suggest you download a version of the database [here](download.html) and run blast locally.
+You can run BLAST to align your own sequences against the **OomyceteDB** *rps10* database here.
+This BLAST will be run on our servers and we have limited resources.
+For large or numerous BLAST runs, we suggest you download a version of the database [here](download.html) and run blast locally.
 
 **The application below might take a few seconds to load**
 

@@ -8,4 +8,4 @@ source("style.R")
 
 # Frequently asked questions
 
-As we get questions, we will post them and our answers here.
+Please email the PIs with questions and we will post responses of general interest here.
