@@ -1,9 +1,9 @@
 ---
 title: "Rps10 Locus-specific Illumina Amplicon PCR Protocol"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
