@@ -11,6 +11,7 @@ options(shiny.sanitize.errors = FALSE)
 
 local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
+blast_path = "./blast/bin"
 
 outfmt_options <- c(" 0: pairwise",
                     " 1: query-anchored showing identities", 
@@ -77,7 +78,7 @@ server <- function(input, output, session) {
       }
       
       # Calls BLAST
-      blast_command <- paste(input$program,
+      blast_command <- paste(file.path(blast_path, input$program),
                              "-query", query_temp_path,
                              "-db", db ,
                              ifelse(input$program == "blastn", "-dust no", ""),
