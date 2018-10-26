@@ -10,6 +10,36 @@ blast_database_dir = "data/blast_databases"
 
 options(shiny.sanitize.errors = FALSE)
 
+read_fasta <- function(file_path) {
+  # Read raw string
+  raw_data <- readr::read_file(file_path)
+  
+  # Return an empty vector an a warning if no sequences are found
+  if (raw_data == "") {
+    warning(paste0("No sequences found in the file: ", file_path))
+    return(character(0))
+  }
+  
+  # Find location of every header start 
+  split_data <- stringr::str_split(raw_data, pattern = "\n>", simplify = TRUE)
+  
+  # Split the data for each sequence into lines
+  split_data <- stringr::str_split(split_data, pattern = "\n")
+  
+  # The first lines are headers, so remvove those
+  headers <- vapply(split_data, FUN = `[`, FUN.VALUE = character(1), 1)
+  split_data <- lapply(split_data, FUN = `[`, -1)
+  
+  # Remove the > from the first sequence. The others were removed by the split
+  headers[1] <- sub(headers[1], pattern = "^>", replacement = "")
+  
+  # Combine multiple lines into single sequences
+  seqs <- vapply(split_data, FUN = paste0, FUN.VALUE = character(1), collapse = "")
+  
+  # Combine and return results 
+  return(stats::setNames(seqs, headers))
+}
+
 
 server <- function(input, output, session) {
   
@@ -19,7 +49,7 @@ server <- function(input, output, session) {
     {
       # Parse whole database
       database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
-      database_seqs <- metacoder::read_fasta(database_path)
+      database_seqs <- read_fasta(database_path)
       tm_obj <- taxa::extract_tax_data(names(database_seqs),
                                        include_match = FALSE,
                                        class_sep = ";",
