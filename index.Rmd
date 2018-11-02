@@ -16,10 +16,10 @@ source("configuration.R")
 
 **OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
 *rps10* is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes.
-The curated database can be downloaded or queried using BLAST.
-We invite all memebers of the oomycete community to contribute sequences for new Oomcyete species.
+The curated database can be downloaded or queried using BLAST (for any release).
+We invite all members of the oomycete community to contribute sequences for new Oomycete species.
+We will include any new taxon with a GenBank accession you share with us.
 The following heat-tree shows the species currently represented in the database:
-
 
 ```{r}
 library(metacoder)
@@ -45,7 +45,7 @@ obj %>%
             node_color_axis_label = "Number of sequences")
 ```
 
-The following table shows the species per genus currently included in **OomyceteDB**:
+**OomyceteDB** currently includes the following Oomycete taxa:
 
 ```{r}
 library(dplyr)
@@ -70,6 +70,3 @@ genus_table %>%
   column_spec(1, italic = T) 
 ```
 
-## Funding
-
-**OomyceteDB** was supported by NSF ([1542681](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1542681)) USDA ARS ([2072-22000-041-00-D](https://www.ars.usda.gov/research/project/?accnNo=432469), [2038-22000-016-00-D](https://www.ars.usda.gov/research/project/?accnNo=431470)).
