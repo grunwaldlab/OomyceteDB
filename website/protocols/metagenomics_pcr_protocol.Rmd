@@ -1,9 +1,9 @@
 ---
 title: "Rps10 Locus-specific Illumina Amplicon PCR Protocol"
 output:
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,17 +12,21 @@ source("style.R")
 
 *Updated October 2018*
 
-The propose of the rps10 locus-specific protocol is to amplify the oomycete rps10 locus for metagenomic research.
+The purpose of the rps10 locus-specific protocol is to amplify the oomycete rps10 locus for metagenomic research.
 This produces an amplicon around about 441bp.
 We have tested this protocol with DNA from the DNeasy PowerSoil Kit from Qiagen (Cat No. 12888) and the DNeasy Plant mini kit from Qiagen (Cat No. 69106), but other sources of DNA will probably works as well.
 
 ## Rps10 locus-specific PCR mixture
 
 ```{r}
-custom_kable(read_tsv("tables/metabarcoding_pcr_recipe.tsv")) %>%
+data <- read_tsv("tables/metabarcoding_pcr_recipe.tsv")
+data[2, 1] <- paste0(unlist(data[2, 1]), footnote_marker_number(1))
+data[3, 1] <- paste0(unlist(data[3, 1]), footnote_marker_number(2))
+data[5, 1] <- paste0(unlist(data[5, 1]), footnote_marker_number(3))
+custom_kable(data) %>%
   footnote(number = c("Type-it Microsatellite PCR Kit from Qiagen (Cat No. 206243)",
-                      "Total volume based on 30µL of amplicon, 4µL to run on a gel, 1ul to account for error",
-                      'Refer to the "Rps10 metabarcoding primer ordering and mixing protocol" for primer information.'))
+                      'Refer to the "Rps10 metabarcoding primer ordering and mixing protocol" for primer information.',
+                      "Total volume based on 30µL of amplicon, 4µL to run on a gel, 1ul to account for error"))
 ```
 
 

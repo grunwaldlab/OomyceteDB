@@ -19,16 +19,16 @@ These relate to using the Rps10 barcode for metagenomics research.
 
 This protocol is used to prepare PCR primers for the rps10 locus for metabarcoding.
 
-<a href="protocols/metagenomics_primer_protocol.html" class="btn btn-success" role="button">View as HTML</a>
-<a href="protocols/metagenomics_primer_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
+<a href="protocols/metagenomics_primer_protocol.html" class="btn btn-success" role="button" target="_blank">View as HTML</a>
+<a href="protocols/metagenomics_primer_protocol.pdf" class="btn btn-info" role="button" target="_blank">View as PDF</a>
 
 
 #### Rps10 Locus-specific Illumina Amplicon PCR
 
 This protocol is used to PCR amplify the Rps10 locus for use in amplicon metagenomics research.
 
-<a href="protocols/metagenomics_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a>
-<a href="protocols/metagenomics_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
+<a href="protocols/metagenomics_pcr_protocol.html" class="btn btn-success" role="button" target="_blank">View as HTML</a>
+<a href="protocols/metagenomics_pcr_protocol.pdf" class="btn btn-info" role="button" target="_blank">View as PDF</a>
 
 ## Database protocols
 
@@ -38,8 +38,8 @@ These relate to generating sequences to contribute to the Rps10 reference databa
 
 This protocol is used to generate sequences for the Rps10 reference database.
 
-<a href="protocols/database_pcr_protocol.html" class="btn btn-success" role="button">View as HTML</a>
-<a href="protocols/database_pcr_protocol.pdf" class="btn btn-info" role="button">View as PDF</a>
+<a href="protocols/database_pcr_protocol.html" class="btn btn-success" role="button" target="_blank">View as HTML</a>
+<a href="protocols/database_pcr_protocol.pdf" class="btn btn-info" role="button" target="_blank">View as PDF</a>
 
 
 
