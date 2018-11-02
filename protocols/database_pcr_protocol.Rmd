@@ -1,9 +1,9 @@
 ---
 title: "Rps10 database sequence PCR protocol"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +15,7 @@ source("style.R")
 
 **The purpose of this protocol is to amplify the oomycete rps10 locus for use in the rps10 barcode database. If you want to use the Rps10 locus for amplicon metagenomics, use the metabarcoding protocol instead.**
 The rps10 database amplicon is longer than the rps10 locus-specific amplicon and conveniently includes the rps10 locus-specific primer sequences.
+The amplicon produced is usually around 554bp long.
 
 
 ## Ordering rps10 database primers
@@ -34,7 +35,11 @@ custom_kable(tibble(
 ## Rps10 database PCR mixture
 
 ```{r}
-custom_kable(read_tsv("tables/database_pcr_recipe.tsv")) %>%
+data <- read_tsv("tables/database_pcr_recipe.tsv")
+data[c(2, 7), 1] <- paste0(unlist(data[c(2, 7), 1]), footnote_marker_number(1))
+data[3, 1] <- paste0(unlist(data[3, 1]), footnote_marker_number(2))
+data[4, 1] <- paste0(unlist(data[4, 1]), footnote_marker_number(3))
+custom_kable(data) %>%
    footnote(number = c("GenScript Taq and 10x buffer from GenScript (Cat. No. Cat. No. E00007)",
                        "25mM MgCl2 from USB (Cat. No 71167)",
                        "100mM dNTP from Invitrogen (Cat. No 10297-018)"))
@@ -44,6 +49,5 @@ custom_kable(read_tsv("tables/database_pcr_recipe.tsv")) %>%
 ## Rps10 database thermocycler conditions
 
 ```{r}
-custom_kable(read_tsv("tables/database_pcr_thermocycler_profile.tsv")) %>%
-   footnote(number = c("Rps10 database amplicon size is about 554bp"))
+custom_kable(read_tsv("tables/database_pcr_thermocycler_profile.tsv")) 
 ```
