@@ -6,12 +6,14 @@ library(taxa)
 library(shinyjs)
 library(stringr)
 library(ggplot2)
+library(readr)
+library(ape)
 
 options(shiny.sanitize.errors = FALSE)
 
 local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
-blast_path = "./blast/bin"
+blast_path = "/usr/bin/"
 
 outfmt_options <- c(" 0: pairwise",
                     " 1: query-anchored showing identities", 
@@ -64,7 +66,7 @@ server <- function(input, output, session) {
       if (check_blast_input() != "OK") {
         return(NULL)
       }
-
+      
       # Choose database 
       db <- file.path("..", "..", blast_database_dir, input$db)
       remote <- c("")
@@ -99,7 +101,7 @@ server <- function(input, output, session) {
       # Convert to XML format
       raw_results <- raw_blast_results()
       tmp_file <- tempfile()
-      readr::write_lines(raw_results, path = tmp_file)
+      write_lines(raw_results, path = tmp_file)
       blast_formatter_cmd <- paste("blast_formatter",
                                    "-archive", tmp_file,
                                    "-outfmt 5")
@@ -114,10 +116,10 @@ server <- function(input, output, session) {
       # Convert to XML format
       raw_results <- raw_blast_results()
       tmp_file <- tempfile()
-      readr::write_lines(raw_results, path = tmp_file)
+      write_lines(raw_results, path = tmp_file)
       blast_formatter_cmd <- paste("blast_formatter",
                                    "-archive", tmp_file,
-                                   "-outfmt", stringr::str_match(input$outfmt, " *([0-9]+):.+")[, 2])
+                                   "-outfmt", str_match(input$outfmt, " *([0-9]+):.+")[, 2])
       system(blast_formatter_cmd, intern = TRUE)
     })
   
@@ -190,7 +192,7 @@ server <- function(input, output, session) {
     
     # Replace database index with header
     database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
-    database_seqs <- metacoder::read_fasta(database_path)
+    database_seqs <- read.FASTA(database_path)
     results$hit_ids <- names(database_seqs)[as.numeric(results$hit_ids)]
     
     # Calculate derived columns
@@ -200,26 +202,26 @@ server <- function(input, output, session) {
     
     if (nrow(results) > 0) {
       # Convert to taxmap
-      tm_obj <- taxa::extract_tax_data(results$hit_ids,
-                                       class_sep = ";",
-                                       regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)$",
-                                       key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
+      tm_obj <- extract_tax_data(results$hit_ids,
+                                 class_sep = ";",
+                                 regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)$",
+                                 key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
       
       # Add on results table to taxmap
       tm_obj$data$tax_data <- bind_cols(tm_obj$data$tax_data, results)
     } else {
       # Convert to taxmap
-      tm_obj <- taxa::taxmap()
+      tm_obj <- taxmap()
       
       # Add on results table to taxmap
       tm_obj$data$tax_data <- as_tibble(bind_cols(data.frame(taxon_id = character(),
-                                                   id = character(),
-                                                   name = character(),
-                                                   source = character(),
-                                                   tax_id = character(),
-                                                   taxonomy = character(),
-                                                   input = character()),
-                                        results))
+                                                             id = character(),
+                                                             name = character(),
+                                                             source = character(),
+                                                             tax_id = character(),
+                                                             taxonomy = character(),
+                                                             input = character()),
+                                                  results))
     }
     
     return(tm_obj)
@@ -273,7 +275,7 @@ server <- function(input, output, session) {
     hit_data <- mutate(hit_data,
                        start = query_from - hit_from + 1,
                        end = query_to + (hit_length - hit_to))
-
+    
     # Get data for mismatches
     mismatches <- lapply(str_locate_all(hit_data$midline, " +"), as.data.frame)
     align_data <- do.call(bind_rows, mismatches)
@@ -426,7 +428,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       print("heres")
-      not_used <- readr::write_lines(blast_results_for_download(), path = file)
+      not_used <- write_lines(blast_results_for_download(), path = file)
     }
   )
   
@@ -453,7 +455,7 @@ server <- function(input, output, session) {
     }    
     list(
       h4("Hits"),
-      DT::dataTableOutput("blast_results")
+      dataTableOutput("blast_results")
     )
     
   })
@@ -498,7 +500,7 @@ server <- function(input, output, session) {
     pos_data <- input$clicked_position
     row_index <- abs(round(pos_data$y))
     hit_index <- selected_query_hit_table()$hit_index[row_index]
-
+    
     # Select the row in the hit table
     if (! is.null(hit_index) && hit_index %in% seq_len(nrow(parsed_results()$data$tax_data))) {
       dt_proxy <- dataTableProxy("blast_results")

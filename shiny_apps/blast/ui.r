@@ -1,6 +1,7 @@
 library(shinythemes)
 library(DT)
 library(shinyjs)
+library(tools)
 
 options(shiny.sanitize.errors = FALSE)
 
@@ -27,7 +28,7 @@ outfmt_options <- c(" 0: pairwise",
 
 get_blast_databases <- function(db_dir) {
   # Get possible blast database names
-  db_file_names <- tools::file_path_sans_ext(list.files(db_dir))
+  db_file_names <- file_path_sans_ext(list.files(db_dir))
   output <- unique(db_file_names)
   
   # Remove any that do not appear the correct number of times
