@@ -7,6 +7,18 @@ output: html_document
 source("style.R")
 ```
 
+The database is a FASTA file with the following format:
+
+```
+>id=my_id|name=my_name|source=my_source|tax_id=my_ncbi_tax_id|taxonomy=my;taxonomic;classification
+```
+
+For example:
+
+```
+>id=1|name=Achlya_hypogyna|source=F|tax_id=1202772|taxonomy=cellular organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Achlya;Achlya hypogyna
+```
+
 Here you can download the whole database or just a subset
 Without setting any taxon, the whole database will be displayed and can be downloaded.
 You can also download the whole database [here](download.html).
