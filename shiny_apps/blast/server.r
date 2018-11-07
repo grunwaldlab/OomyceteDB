@@ -8,12 +8,13 @@ library(stringr)
 library(ggplot2)
 library(readr)
 library(ape)
+library(shinythemes)
 
 options(shiny.sanitize.errors = FALSE)
 
 local_release_dir = "data/releases"
 blast_database_dir = "data/blast_databases"
-blast_path = "/usr/bin/"
+blast_path = "/data/www/OomyceteDB/dev/shiny_apps/blast/blast/bin"
 
 outfmt_options <- c(" 0: pairwise",
                     " 1: query-anchored showing identities", 

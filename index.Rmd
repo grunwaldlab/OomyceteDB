@@ -7,6 +7,8 @@ output: html_document
 source("style.R")
 source("tools.R")
 source("configuration.R")
+library(metacoder)
+library(ape)
 ```
 
 
@@ -22,8 +24,7 @@ We will include any new taxon with a GenBank accession you share with us.
 The following heat-tree shows the species currently represented in the database:
 
 ```{r}
-library(metacoder)
-seqs <- ape::read.FASTA(get_latest_release_fa())
+seqs <- read.FASTA(get_latest_release_fa())
 obj <- extract_tax_data(names(seqs),
                         key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
                         regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",

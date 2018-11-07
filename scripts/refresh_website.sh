@@ -1,1 +1,0 @@
-sudo rsync -a ~/files/work/projects/OomyceteDB/website/* /var/www/html/ --delete
