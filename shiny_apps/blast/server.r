@@ -103,7 +103,7 @@ server <- function(input, output, session) {
       raw_results <- raw_blast_results()
       tmp_file <- tempfile()
       write_lines(raw_results, path = tmp_file)
-      blast_formatter_cmd <- paste("blast_formatter",
+      blast_formatter_cmd <- paste(file.path(blast_path, "blast_formatter"),
                                    "-archive", tmp_file,
                                    "-outfmt 5")
       xmlParse(system(blast_formatter_cmd, intern = TRUE))
@@ -118,7 +118,7 @@ server <- function(input, output, session) {
       raw_results <- raw_blast_results()
       tmp_file <- tempfile()
       write_lines(raw_results, path = tmp_file)
-      blast_formatter_cmd <- paste("blast_formatter",
+      blast_formatter_cmd <- paste(file.path(blast_path, "blast_formatter"),
                                    "-archive", tmp_file,
                                    "-outfmt", str_match(input$outfmt, " *([0-9]+):.+")[, 2])
       system(blast_formatter_cmd, intern = TRUE)
