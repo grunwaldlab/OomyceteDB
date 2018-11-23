@@ -21,7 +21,7 @@ The amplicon produced is usually around 554bp long.
 ## Ordering rps10 database primers
 
 Both the rps10 forward and reverse database primer binding sites have two SNPs represented with IUPAC codes (Y=C,T and R=A, G). 
-We ordered the Rps10 database oligos from Life technologies, but other sources will probably work as well. 
+We ordered the Rps10 database oligos from Life technologies. 
 
 ```{r}
 custom_kable(tibble(
@@ -40,7 +40,7 @@ data[c(2, 7), 1] <- paste0(unlist(data[c(2, 7), 1]), footnote_marker_number(1))
 data[3, 1] <- paste0(unlist(data[3, 1]), footnote_marker_number(2))
 data[4, 1] <- paste0(unlist(data[4, 1]), footnote_marker_number(3))
 custom_kable(data) %>%
-   footnote(number = c("GenScript Taq and 10x buffer from GenScript (Cat. No. Cat. No. E00007)",
+   footnote(number = c("GenScript Taq and 10x buffer from GenScript (Cat. No. E00007)",
                        "25mM MgCl2 from USB (Cat. No 71167)",
                        "100mM dNTP from Invitrogen (Cat. No 10297-018)"))
 ```

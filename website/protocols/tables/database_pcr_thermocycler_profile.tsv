@@ -1,7 +1,7 @@
 Step	Temperature	Time
 Initial activation	94 °C	3  min
 3 Step cycling (35 cycles)	 	 
-Denaturation	94 °C	30 s
+    Denaturation	94 °C	30 s
     Annealing	55 °C	45 s
     Extension	72 °C	45 s
 Final Extension	72 °C	7 min

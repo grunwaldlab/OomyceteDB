@@ -32,6 +32,7 @@ outfmt_options <- c(" 0: pairwise",
                     "13: JSON Blast output",
                     "14: XML2 Blast output")
 
+
 server <- function(input, output, session) {
   
   check_blast_input <- eventReactive(
@@ -346,7 +347,7 @@ server <- function(input, output, session) {
     
     
     results$data$tax_data %>% 
-      transmute("Query ID" = query_id,
+      transmute("Query ID" = stringr::str_trunc(query_id, 25),
                 "Hit taxonomic classification" = classification,
                 "Identity (%)" = round(prop_identity * 100, digits = 3),
                 "Query Coverage (%)" = round(prop_match_len * 100, digits = 3),

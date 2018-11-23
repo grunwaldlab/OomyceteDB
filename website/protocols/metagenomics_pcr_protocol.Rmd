@@ -1,9 +1,9 @@
 ---
 title: "Rps10 Locus-specific Illumina Amplicon PCR Protocol"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +14,7 @@ source("style.R")
 
 The purpose of the rps10 locus-specific protocol is to amplify the oomycete rps10 locus for metagenomic research.
 This produces an amplicon around about 441bp.
-We have tested this protocol with DNA from the DNeasy PowerSoil Kit from Qiagen (Cat No. 12888) and the DNeasy Plant mini kit from Qiagen (Cat No. 69106), but other sources of DNA will probably works as well.
+We have tested this protocol with DNA from the DNeasy PowerSoil Kit from Qiagen (Cat No. 12888) and the DNeasy Plant mini kit from Qiagen (Cat No. 69106).
 
 ## Rps10 locus-specific PCR mixture
 
