@@ -82,12 +82,17 @@ server <- function(input, output, session) {
         classifications() %>% 
         `[`(results$data$tax_data$taxon_id)
       
+      genus <- unlist(results$supertaxa(results$data$tax_data$taxon_id, recursive = FALSE, value = "taxon_names"))
+      species <- taxon_names(results)[results$data$tax_data$taxon_id]
+      
       
       results$data$tax_data %>% 
         transmute("Sequence ID" = id,
-                  "Organism name" = name,
+                  # "Organism name" = name,
                   # "NCBI taxon ID" = tax_id,
-                  "Taxonomy" = classification)
+                  # "Taxonomy" = classification,
+                  "Genus" = genus,
+                  "Species" =  name)
     }
   }, selection = "multiple")
   
