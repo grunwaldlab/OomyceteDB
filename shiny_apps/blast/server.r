@@ -345,10 +345,14 @@ server <- function(input, output, session) {
       classifications() %>% 
       `[`(results$data$tax_data$taxon_id)
     
+    genus <- unlist(results$supertaxa(results$data$tax_data$taxon_id, recursive = FALSE, value = "taxon_names"))
+    species <- taxon_names(results)[results$data$tax_data$taxon_id]
     
     results$data$tax_data %>% 
       transmute("Query ID" = stringr::str_trunc(query_id, 25),
-                "Hit taxonomic classification" = classification,
+                # "Hit taxonomic classification" = classification,
+                "Genus" = genus,
+                "Species" =  name,
                 "Identity (%)" = round(prop_identity * 100, digits = 3),
                 "Query Coverage (%)" = round(prop_match_len * 100, digits = 3),
                 "E value" = evalue)
