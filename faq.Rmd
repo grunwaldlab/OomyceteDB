@@ -8,4 +8,4 @@ source("style.R")
 
 # Frequently asked questions
 
-Please email the PIs with questions and we will post responses of general interest here.
+Please email Niklaus J. Grünwald with questions and we will post responses of general interest here.
