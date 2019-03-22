@@ -1,5 +1,5 @@
 ---
-title: "Search the database"
+title: "Download or search the database"
 output: html_document
 ---
 
@@ -20,7 +20,7 @@ For example:
 ```
 
 Here you can download the whole database or just a subset
-Without setting any taxon and pressing "Search", the whole database will be displayed and can be downloaded.
+Without setting any taxon and pressing "Search database", the whole database will be displayed and can be downloaded.
 
 **The application below might take a few seconds to load**
 
