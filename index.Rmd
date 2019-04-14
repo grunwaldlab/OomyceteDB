@@ -13,7 +13,7 @@ library(ape)
 
 
 <font color="red">
- **This website is currently under development. Please do not use.**
+ **This website is an early release. Please use with caution and get in touch with us if you find an issue.**
 </font>
 
 **OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
