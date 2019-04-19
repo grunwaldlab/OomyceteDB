@@ -23,15 +23,13 @@ We invite all members of the oomycete community to contribute sequences for new 
 We will include any new taxon with a GenBank accession you share with us.
 The following heat-tree shows the species currently represented in the database:
 
-```{r}
+
+```{r cache=TRUE, fig.width=10, fig.height=8}
 seqs <- read.FASTA(get_latest_release_fa())
 obj <- extract_tax_data(names(seqs),
                         key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
                         regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
                         class_sep = ";")
-```
-
-```{r cache=TRUE, fig.width=10, fig.height=8}
 set.seed(2)
 obj %>%
   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
