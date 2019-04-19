@@ -1,6 +1,9 @@
-source("configuration.R")
+library(here)
 library(googledrive)
 library(googlesheets)
+
+source(file.path(here(), "configuration.R"))
+
 
 make_blast_database <- function(fasta_path, out_dir_path) {
   # Make temporary version of the database with indexes instead of full headers

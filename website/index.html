@@ -20,7 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <!-- Add icon library -->
@@ -68,9 +67,7 @@ h6 {
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -95,6 +92,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -109,7 +109,6 @@ body {
   padding-top: 66px;
   margin-top: -66px;
 }
-
 .section h2 {
   padding-top: 66px;
   margin-top: -66px;
@@ -129,6 +128,43 @@ body {
 .section h6 {
   padding-top: 66px;
   margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -150,19 +186,85 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -211,126 +313,10 @@ $(document).ready(function () {
 </div>
 
 
-<p><font color="red"> <strong>This website is currently under development. Please do not use.</strong> </font></p>
+<p><font color="red"> <strong>This website is an early release. Please use with caution and get in touch with us if you find an issue.</strong> </font></p>
 <p><strong>OomyceteDB</strong> provides quality-controlled, aligned and annotated Oomycete <em>rps10</em> sequences. <em>rps10</em> is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes. The curated database can be downloaded or queried using BLAST (for any release). We invite all members of the oomycete community to contribute sequences for new Oomycete species. We will include any new taxon with a GenBank accession you share with us. The following heat-tree shows the species currently represented in the database:</p>
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
-<p><strong>OomyceteDB</strong> currently includes the following Oomycete taxa:</p>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Genus
-</th>
-<th style="text-align:left;">
-Number of species
-</th>
-<th style="text-align:left;">
-Number of sequences
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Phytophthora
-</td>
-<td style="text-align:left;">
-110
-</td>
-<td style="text-align:left;">
-492
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Pythium
-</td>
-<td style="text-align:left;">
-27
-</td>
-<td style="text-align:left;">
-31
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Peronospora
-</td>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-73
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Phytopythium
-</td>
-<td style="text-align:left;">
-7
-</td>
-<td style="text-align:left;">
-9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Plasmopara
-</td>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Saprolegnia
-</td>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Achlya
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-Albugo
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-style: italic;">
-<strong>Total</strong>
-</td>
-<td style="text-align:left;">
-<strong>165</strong>
-</td>
-<td style="text-align:left;">
-<strong>614</strong>
-</td>
-</tr>
-</tbody>
-</table>
+<iframe class="shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/contents" frameBorder="0">
+</iframe>
 
 <div class="footer_section">
   <div class="footer_content">

@@ -24,48 +24,6 @@ We will include any new taxon with a GenBank accession you share with us.
 The following heat-tree shows the species currently represented in the database:
 
 
-```{r cache=TRUE, fig.width=10, fig.height=8}
-seqs <- read.FASTA(get_latest_release_fa())
-obj <- extract_tax_data(names(seqs),
-                        key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
-                        regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
-                        class_sep = ";")
-set.seed(2)
-obj %>%
-  filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
-  remove_redundant_names() %>%
-  heat_tree(node_label = taxon_names,
-            node_size = n_obs, 
-            node_color = n_obs,
-            node_size_range = c(0.01, 0.04),
-            node_label_size_range = c(0.015, 0.03),
-            edge_size_range =  c(0.01, 0.04) * .5,
-            layout = "da", initial_layout = "re",
-            node_color_axis_label = "Number of sequences")
-```
-
-**OomyceteDB** currently includes the following Oomycete taxa:
-
-```{r}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-taxa_in_table <- c("Phytophthora", "Pythium", "Phytopythium", "Achlya", "Albugo", "Peronospora", "Plasmopara", "Saprolegnia")
-genus_table <- obj %>%
-  filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
-  get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
-  filter(taxon_names %in% taxa_in_table)
-  
-
-genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
-                                       "**Total**",
-                                       paste0("**", sum(genus_table$n_subtaxa), "**")))
-
-genus_table %>%
-  arrange(desc(as.numeric(n_subtaxa))) %>%
-  transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
-  kable() %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
-  column_spec(1, italic = T) 
-```
+<iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/contents" frameBorder="0">
+</iframe>
 
