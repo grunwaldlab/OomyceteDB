@@ -8,3 +8,5 @@
 website/data
 website/scripts
 website/shiny_apps
+*.html
+site_libs
