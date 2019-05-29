@@ -41,14 +41,16 @@ read_fasta <- function(file_path) {
 
 
 get_release_data <- function() {
-  read_csv(local_release_spreadsheet_path, col_type = cols())
+  data <- read_csv(local_release_spreadsheet_path, col_type = cols())
+  data$release_name <- paste0(release_name_prefix, data$release_number)
+  return(data)
 }
 
 
 get_public_release_names <- function() {
   release_data <- get_release_data()
   release_data <- release_data[release_data$public, ]
-  paste0(release_name_prefix, release_data$release_number)
+  return(release_data$release_name)
 }
 
 

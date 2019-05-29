@@ -23,7 +23,8 @@ ui <- fluidPage(
   
   mainPanel(
     h3("Subsetting options"),
-    selectInput("db", "Database:", choices = rev(get_public_release_names()), width = option_width),
+    # selectInput("db", "Database:", choices = rev(get_public_release_names()), width = option_width),
+    uiOutput("database_table_ui"),
     textInput("taxon_subset", "Taxa to subset the database to:", value = "",
               placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
     br(),
@@ -34,7 +35,7 @@ ui <- fluidPage(
   mainPanel(
     # h3("Results"),
     # DT::dataTableOutput("database_list"),
-    uiOutput("seq_list_table"),
+    uiOutput("sequence_table_ui"),
     uiOutput("download_data_form"),
     uiOutput("seq_details")
   )
