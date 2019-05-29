@@ -169,14 +169,18 @@ server <- function(input, output, session) {
   
   
   output$database_table_ui <- renderUI({
+    list(
+      DT::dataTableOutput("database_table", width = "60%")
+    )
+  })
+  
+  output$database_whole_download_ui <- renderUI({
     if (is.null(input$database_table_rows_selected)) {
       return(list(
-        DT::dataTableOutput("database_table", width = "60%"),
         p("Click on a release to download.")
       ))
     } else {
       return(list(
-        DT::dataTableOutput("database_table", width = "60%"),
         downloadButton(outputId = "download_data_whole", label = "Download database")
       ))
     }
