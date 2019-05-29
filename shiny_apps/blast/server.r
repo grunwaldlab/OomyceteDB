@@ -379,7 +379,7 @@ server <- function(input, output, session) {
                           "Gaps" =  gaps,
                           "Query aligned range" = paste(query_from, "-", query_to),
                           "Hit aligned range" = paste(hit_from, "-", hit_to),
-                          "E value" = evalue,
+                          # "E value" = evalue,
                           "Bit score"  = bit_score,
                           "Query ID" = query_id,
                           # "Hit ID" = hit_ids,

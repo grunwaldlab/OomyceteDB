@@ -141,7 +141,8 @@ server <- function(input, output, session) {
     if (is.null(selected_subset())) {
     } else {
       list(
-        h4("Sequences in subset"),
+        h3("Search Results"),
+        p('Click on one or more rows to get the FASTA entry. Click again to deselect. You can also download the search results as a FASTA file by pressing the "Download database subset" button below.'),
         DT::dataTableOutput("database_list")
       )
     }
@@ -153,8 +154,6 @@ server <- function(input, output, session) {
     } else {
       if (is.null(input$database_list_rows_selected)) {
         return(list(
-          h4("Selected sequences"),
-          p("Click on one or more rows to get the FASTA entry. Click again to deselect.")
         ))
       } else {
         return(list(

@@ -32,7 +32,7 @@ ui <- fluidPage(
   
   
   mainPanel(
-    h3("Results"),
+    # h3("Results"),
     # DT::dataTableOutput("database_list"),
     uiOutput("seq_list_table"),
     uiOutput("download_data_form"),
