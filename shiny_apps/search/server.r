@@ -4,6 +4,7 @@ library(DT)
 library(taxa)
 library(shinyjs)
 library(here)
+library(tibble)
 
 source(file.path(here(), "tools.R"))
 
@@ -67,13 +68,18 @@ server <- function(input, output, session) {
       species <- taxon_names(results)[results$data$tax_data$taxon_id]
       
       
-      results$data$tax_data %>% 
-        transmute("Sequence ID" = id,
-                  # "Organism name" = name,
-                  # "NCBI taxon ID" = tax_id,
-                  # "Taxonomy" = classification,
-                  "Family" = family,
-                  "Species" =  name)
+      if (nrow(results$data$tax_data) == 0) {
+        output <- tibble("Sequence ID" = character(),
+                        "Family" = character(),
+                        "Species" =  character())
+      } else {
+        output <- results$data$tax_data %>% 
+          transmute("Sequence ID" = id,
+                    "Family" = family,
+                    "Species" =  name)
+        
+      }
+      return(output)
     }
   }, selection = "multiple")
   
@@ -163,20 +169,26 @@ server <- function(input, output, session) {
   
   
   output$database_table_ui <- renderUI({
-    list(
-      DT::dataTableOutput("database_table", width = "60%"),
-      downloadButton(outputId = "download_data_whole", label = "Download database")
-    )
+    if (is.null(input$database_table_rows_selected)) {
+      return(list(
+        DT::dataTableOutput("database_table", width = "60%"),
+        p("Click on a release to download.")
+      ))
+    } else {
+      return(list(
+        DT::dataTableOutput("database_table", width = "60%"),
+        downloadButton(outputId = "download_data_whole", label = "Download database")
+      ))
+    }
   })
   
   output$search_ui <- renderUI({
     if (is.null(input$database_table_rows_selected)) {
     } else {
       return(list(
-        h3("Subset a release"),
+        h3("Search by taxon"),
         textInput("taxon_subset", "Taxa to subset the database to:", value = "",
                   placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
-        # br(),
         actionButton("search", "Search database")
       ))
     }
