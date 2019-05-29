@@ -9,12 +9,11 @@ library(ggplot2)
 library(readr)
 library(ape)
 library(shinythemes)
+library(here)
 
 options(shiny.sanitize.errors = FALSE)
 
-local_release_dir = "data/releases"
-blast_database_dir = "data/blast_databases"
-blast_path = "/data/www/OomyceteDB/dev/shiny_apps/blast/blast/bin"
+source(file.path(here(), "tools.R"))
 
 outfmt_options <- c(" 0: pairwise",
                     " 1: query-anchored showing identities", 
@@ -70,7 +69,7 @@ server <- function(input, output, session) {
       }
       
       # Choose database 
-      db <- file.path("..", "..", blast_database_dir, input$db)
+      db <- file.path(blast_database_dir, input$db)
       remote <- c("")
       
       # Format query
@@ -193,7 +192,7 @@ server <- function(input, output, session) {
     results[numeric_cols] <- lapply(results[numeric_cols], as.numeric)
     
     # Replace database index with header
-    database_path <- file.path("..", "..", local_release_dir, paste0(input$db, ".fa"))
+    database_path <- file.path(local_release_dir, paste0(input$db, ".fa"))
     database_seqs <- read.FASTA(database_path)
     results$hit_ids <- names(database_seqs)[as.numeric(results$hit_ids)]
     
