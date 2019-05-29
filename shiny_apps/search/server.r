@@ -1,5 +1,4 @@
-require(XML)
-library(plyr)
+library(XML)
 library(dplyr)
 library(DT)
 library(taxa)
