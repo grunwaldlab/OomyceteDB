@@ -1,13 +1,17 @@
 library(here)
 library(googledrive)
 library(googlesheets)
+library(readr)
+library(tools)
+library(stringr)
+library(stats)
 
 source(file.path(here(), "configuration.R"))
 
 
 read_fasta <- function(file_path) {
   # Read raw string
-  raw_data <- readr::read_file(file_path)
+  raw_data <- read_file(file_path)
   
   # Return an empty vector an a warning if no sequences are found
   if (raw_data == "") {
@@ -16,10 +20,10 @@ read_fasta <- function(file_path) {
   }
   
   # Find location of every header start 
-  split_data <- stringr::str_split(raw_data, pattern = "\n>", simplify = TRUE)
+  split_data <- str_split(raw_data, pattern = "\n>", simplify = TRUE)
   
   # Split the data for each sequence into lines
-  split_data <- stringr::str_split(split_data, pattern = "\n")
+  split_data <- str_split(split_data, pattern = "\n")
   
   # The first lines are headers, so remvove those
   headers <- vapply(split_data, FUN = `[`, FUN.VALUE = character(1), 1)
@@ -32,12 +36,12 @@ read_fasta <- function(file_path) {
   seqs <- vapply(split_data, FUN = paste0, FUN.VALUE = character(1), collapse = "")
   
   # Combine and return results 
-  return(stats::setNames(seqs, headers))
+  return(setNames(seqs, headers))
 }
 
 
 get_release_data <- function() {
-  readr::read_csv(local_release_spreadsheet_path, col_type = cols())
+  read_csv(local_release_spreadsheet_path, col_type = cols())
 }
 
 
@@ -51,13 +55,13 @@ get_public_release_names <- function() {
 make_blast_database <- function(fasta_path, out_dir_path) {
   # Make temporary version of the database with indexes instead of full headers
   #   This is needed because BLAST will not return header info after the first space..
-  ref_seqs <- metacoder::read_fasta(fasta_path)
+  ref_seqs <- read_fasta(fasta_path)
   names(ref_seqs) <- as.character(seq_along(ref_seqs))
   temp_database_path <- tempfile()
-  readr::write_lines(paste0(">", names(ref_seqs), "\n", ref_seqs), temp_database_path)
+  write_lines(paste0(">", names(ref_seqs), "\n", ref_seqs), temp_database_path)
   
   # Make blast database with temporary file
-  blast_db_name <- tools::file_path_sans_ext(basename(fasta_path))
+  blast_db_name <- file_path_sans_ext(basename(fasta_path))
   blast_db_path <- file.path(out_dir_path, blast_db_name)
   makeblastdb_command <- paste("makeblastdb",
                                "-in", temp_database_path,
@@ -69,7 +73,7 @@ make_blast_database <- function(fasta_path, out_dir_path) {
 
 update_releases <- function() {
   # turn off authentication for google drive
-  googledrive::drive_auth_config(active = FALSE)
+  drive_auth_config(active = FALSE)
   
   # Update local spreadsheet
   drive_files <- drive_ls(path = as_id(googledrive_root_id))
@@ -78,13 +82,13 @@ update_releases <- function() {
          '". Check that the file exists in Google Drive or change the name of the file to look for in "configuration.R".')
   }
   releases_spreadsheet_id <- drive_files$id[drive_files$name == release_spreadsheet_name]
-  release_spreadsheet_obj <- googlesheets::gs_key(releases_spreadsheet_id)
-  googlesheets::gs_download(release_spreadsheet_obj, to = local_release_spreadsheet_path, overwrite = TRUE)
-  release_data <- readr::read_csv(local_release_spreadsheet_path)
+  release_spreadsheet_obj <- gs_key(releases_spreadsheet_id)
+  gs_download(release_spreadsheet_obj, to = local_release_spreadsheet_path, overwrite = TRUE)
+  release_data <- read_csv(local_release_spreadsheet_path)
  
   # Check for new releases
   local_release_names <- list.files(local_release_dir, pattern = paste0(release_name_prefix, "[0-9]+\\.fa"))
-  local_release_nums <- stringr::str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
+  local_release_nums <- str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
   remote_release_names <- release_data$release_number
   new_release_indexes <- which(! remote_release_names %in% local_release_nums)
   message('Adding ', length(new_release_indexes), ' releases.')
@@ -99,7 +103,7 @@ update_releases <- function() {
     new_release_id <- drive_files$id[drive_files$name == new_release_remote]
     new_release_file_name <- paste0(release_name_prefix, release_data$release_number[index], ".fa")
     new_release_file_path <- file.path(local_release_dir, new_release_file_name)
-    googledrive::drive_download(as_id(new_release_id), path = new_release_file_path)
+    drive_download(as_id(new_release_id), path = new_release_file_path)
     
     # Create a blast database for it
     make_blast_database(fasta_path = new_release_file_path, out_dir_path = blast_database_dir)
@@ -112,7 +116,7 @@ update_releases <- function() {
 
 get_blast_databases <- function(db_dir) {
   # Get possible blast database names
-  db_file_names <- tools::file_path_sans_ext(list.files(db_dir))
+  db_file_names <- file_path_sans_ext(list.files(db_dir))
   output <- unique(db_file_names)
   
   # Remove any that do not appear the correct number of times
@@ -125,7 +129,7 @@ get_blast_databases <- function(db_dir) {
 
 get_latest_release_fa <- function() {
   local_release_names <- list.files(local_release_dir, pattern = paste0(release_name_prefix, "[0-9]+\\.fa"))
-  local_release_nums <- stringr::str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
+  local_release_nums <- str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
   local_release_nums <- as.numeric(local_release_nums)
   file.path(local_release_dir, local_release_names[which.max(local_release_nums)])
 }
