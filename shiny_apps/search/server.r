@@ -90,7 +90,9 @@ server <- function(input, output, session) {
       transmute("Release" = release_number,
                 "Date released" = release_date,
                 "Notes" =  release_notes)
-  }, selection = list(mode = 'single', selected = 1, target = 'row'))
+  }, 
+  selection = list(mode = 'single', selected = 1, target = 'row'),
+  rownames = FALSE)
   
   
   output$selected_seq_printout <- renderText({
@@ -165,14 +167,10 @@ server <- function(input, output, session) {
     } else {
       if (is.null(input$sequence_table_rows_selected)) {
         return(list(
-          # h4("Download database subset"),
-          downloadButton(outputId = "download_data_whole", label = "Download database"),
           downloadButton(outputId = "download_data_subset", label = "Download database subset")
         ))
       } else {
         return(list(
-          # h4("Download database subset"),
-          downloadButton(outputId = "download_data_whole", label = "Download database"),
           downloadButton(outputId = "download_data_subset", label = "Download database subset"),
           downloadButton(outputId = "download_data_selected", label = "Download selected sequences")
         ))
@@ -183,14 +181,13 @@ server <- function(input, output, session) {
   
   output$database_table_ui <- renderUI({
     list(
-      h3("Releases"),
-      p('Click on one or more rows to select the release of the database to download or search'),
-      DT::dataTableOutput("database_table")
+      DT::dataTableOutput("database_table", width = "60%"),
+      downloadButton(outputId = "download_data_whole", label = "Download database")
     )
   })
   
   output$sequence_table_ui <- renderUI({
-    if (is.null(selected_subset())) {
+    if (is.null(selected_subset()) || is.null(input$database_table_rows_selected)) {
     } else {
       list(
         h3("Search Results"),
