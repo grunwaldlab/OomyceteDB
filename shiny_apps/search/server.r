@@ -182,14 +182,11 @@ server <- function(input, output, session) {
   })
   
   output$database_table_ui <- renderUI({
-    if (is.null(selected_subset())) {
-    } else {
-      list(
-        h3("Releases"),
-        p('Click on one or more rows to select the release of the database to download or search'),
-        DT::dataTableOutput("database_table")
-      )
-    }
+    list(
+      h3("Releases"),
+      p('Click on one or more rows to select the release of the database to download or search'),
+      DT::dataTableOutput("database_table")
+    )
   })
   
   output$sequence_table_ui <- renderUI({
