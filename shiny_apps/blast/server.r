@@ -1,4 +1,5 @@
-require(XML)
+library(XML)
+library(shiny)
 library(plyr)
 library(dplyr)
 library(DT)
@@ -192,7 +193,7 @@ server <- function(input, output, session) {
     results[numeric_cols] <- lapply(results[numeric_cols], as.numeric)
     
     # Replace database index with header
-    database_path <- file.path(local_release_dir, paste0(input$db, ".fa"))
+    database_path <- file.path(local_release_dir, paste0(isolate(input$db), ".fa"))
     database_seqs <- read.FASTA(database_path)
     results$hit_ids <- names(database_seqs)[as.numeric(results$hit_ids)]
     
@@ -348,6 +349,7 @@ server <- function(input, output, session) {
     species <- taxon_names(results)[results$data$tax_data$taxon_id]
     
     results$data$tax_data %>% 
+      arrange(desc(prop_identity)) %>%
       transmute("Query ID" = stringr::str_trunc(query_id, 25),
                 # "Hit taxonomic classification" = classification,
                 "Genus" = genus,
