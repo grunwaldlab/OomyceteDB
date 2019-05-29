@@ -1,4 +1,4 @@
-library(shinythemes)
+# library(shinythemes)
 library(DT)
 library(shinyjs)
 library(here)
@@ -10,7 +10,7 @@ options(shiny.sanitize.errors = FALSE)
 
 ui <- fluidPage(
   
-  theme = shinytheme("cerulean"),
+  # theme = shinytheme("cerulean"),
   
   tagList(
     tags$head(
