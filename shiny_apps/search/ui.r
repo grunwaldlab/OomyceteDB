@@ -25,13 +25,7 @@ ui <- fluidPage(
     h3("Releases"),
     p('Click on one or more rows to select the release of the database to download or search'),
     uiOutput("database_table_ui"),
-    
-    h3("Search a release"),
-    textInput("taxon_subset", "Taxa to subset the database to:", value = "",
-              placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
-    br(),
-    actionButton("search", "Search database"),
-
+    uiOutput("search_ui"),
     uiOutput("sequence_table_ui"),
     uiOutput("download_data_form"),
     uiOutput("seq_details")

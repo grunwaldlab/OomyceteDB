@@ -162,8 +162,28 @@ server <- function(input, output, session) {
   )
   
   
+  output$database_table_ui <- renderUI({
+    list(
+      DT::dataTableOutput("database_table", width = "60%"),
+      downloadButton(outputId = "download_data_whole", label = "Download database")
+    )
+  })
+  
+  output$search_ui <- renderUI({
+    if (is.null(input$database_table_rows_selected)) {
+    } else {
+      return(list(
+        h3("Subset a release"),
+        textInput("taxon_subset", "Taxa to subset the database to:", value = "",
+                  placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
+        # br(),
+        actionButton("search", "Search database")
+      ))
+    }
+  })
+  
   output$download_data_form <- renderUI({
-    if (is.null(selected_subset())) {
+    if (is.null(selected_subset()) || is.null(input$database_table_rows_selected)) {
     } else {
       if (is.null(input$sequence_table_rows_selected)) {
         return(list(
@@ -179,18 +199,11 @@ server <- function(input, output, session) {
     }
   })
   
-  output$database_table_ui <- renderUI({
-    list(
-      DT::dataTableOutput("database_table", width = "60%"),
-      downloadButton(outputId = "download_data_whole", label = "Download database")
-    )
-  })
-  
   output$sequence_table_ui <- renderUI({
     if (is.null(selected_subset()) || is.null(input$database_table_rows_selected)) {
     } else {
       list(
-        h3("Search Results"),
+        h4("Search results"),
         p('Click on one or more rows to get the FASTA entry. Click again to deselect. You can also download the search results as a FASTA file by pressing the "Download database subset" button below.'),
         DT::dataTableOutput("sequence_table")
       )
@@ -199,7 +212,7 @@ server <- function(input, output, session) {
   
   output$seq_details <- renderUI({
     x = 1
-    if (is.null(selected_subset())) {
+    if (is.null(selected_subset()) || is.null(input$database_table_rows_selected)) {
     } else {
       if (is.null(input$sequence_table_rows_selected)) {
         return(list(
