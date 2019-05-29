@@ -25,7 +25,7 @@ ui <- fluidPage(
     h3("Releases"),
     p('Click on one or more rows to select the release of the database to download or search'),
     uiOutput("database_table_ui"),
-    uiOutput("$database_whole_download_ui"),
+    uiOutput("database_whole_download_ui"),
     uiOutput("search_ui"),
     uiOutput("sequence_table_ui"),
     uiOutput("download_data_form"),
