@@ -140,3 +140,7 @@ input[type=submit]:hover {
 .footer_logo {
     height: 50px;
 }
+
+table.dataTable th.dt-left, table.dataTable td.dt-left {
+    text-align: left;
+}
