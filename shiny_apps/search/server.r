@@ -93,7 +93,7 @@ server <- function(input, output, session) {
   # makes the table of sequences displayed as search results
   output$database_table <- renderDataTable({
     public_release_data() %>%
-      transmute("Release" = as.character(release_number),
+      transmute("Release" = release_number,
                 "Date released" = release_date,
                 "Sequences" = seq_count,
                 "Notes" =  release_notes)
@@ -171,7 +171,8 @@ server <- function(input, output, session) {
   
   output$database_table_ui <- renderUI({
     list(
-      DT::dataTableOutput("database_table", width = "60%")
+      DT::dataTableOutput("database_table", width = "60%",
+                          options = list(columnDefs = list(list(className = 'dt-left', targets = "_all"))))
     )
   })
   
