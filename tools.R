@@ -43,6 +43,12 @@ read_fasta <- function(file_path) {
 get_release_data <- function() {
   data <- read_csv(local_release_spreadsheet_path, col_type = cols())
   data$release_name <- paste0(release_name_prefix, data$release_number)
+  data$release_path <- file.path(local_release_dir, paste0(data$release_name, ".fa"))
+  data$blast_path <- file.path(blast_database_dir, data$release_name)
+  count_data <- system2("grep", c("-c", "'^>'", file.path(local_release_dir, "*.fa")), stdout = TRUE) %>%
+    read_delim(":", col_names = c("release_name", "seq_count")) %>%
+    mutate(release_name = basename(release_name))
+  data <- left_join(data, count_data)
   return(data)
 }
 

@@ -7,3 +7,4 @@ release_name_prefix <- "release_"
 local_release_dir <- file.path(here(), "data/releases")
 blast_database_dir <- file.path(here(), "data/blast_databases")
 blast_path <- file.path(here(), "shiny_apps/blast/blast/bin") 
+
