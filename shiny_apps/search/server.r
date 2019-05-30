@@ -99,7 +99,8 @@ server <- function(input, output, session) {
                 "Notes" =  release_notes)
   }, 
   selection = list(mode = 'single', selected = 1, target = 'row'),
-  rownames = FALSE)
+  rownames = FALSE,
+  options = list(columnDefs = list(list(className = 'dt-left', targets = "_all"))))
   
   
   output$selected_seq_printout <- renderText({
@@ -171,8 +172,7 @@ server <- function(input, output, session) {
   
   output$database_table_ui <- renderUI({
     list(
-      DT::dataTableOutput("database_table", width = "60%",
-                          options = list(columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+      DT::dataTableOutput("database_table", width = "60%")
     )
   })
   
