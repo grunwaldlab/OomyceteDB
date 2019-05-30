@@ -141,6 +141,6 @@ input[type=submit]:hover {
     height: 50px;
 }
 
-table.dataTable th.dt-left, table.dataTable td.dt-left {
+.dataTable th {
     text-align: left;
 }
