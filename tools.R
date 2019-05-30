@@ -5,6 +5,7 @@ library(readr)
 library(tools)
 library(stringr)
 library(stats)
+library(dplyr)
 
 source(file.path(here(), "configuration.R"))
 
@@ -46,9 +47,10 @@ get_release_data <- function() {
   data$release_path <- file.path(local_release_dir, paste0(data$release_name, ".fa"))
   data$blast_path <- file.path(blast_database_dir, data$release_name)
   count_data <- system2("grep", c("-c", "'^>'", file.path(local_release_dir, "*.fa")), stdout = TRUE) %>%
+    paste0(collapse = "\n") %>%
     read_delim(":", col_names = c("release_name", "seq_count")) %>%
-    mutate(release_name = basename(release_name))
-  data <- left_join(data, count_data)
+    mutate(release_name = file_path_sans_ext(basename(release_name)))
+  data <- left_join(data, count_data, by = "release_name")
   return(data)
 }
 
