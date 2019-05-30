@@ -99,8 +99,7 @@ server <- function(input, output, session) {
                 "Notes" =  release_notes)
   }, 
   selection = list(mode = 'single', selected = 1, target = 'row'),
-  rownames = FALSE,
-  options = list(columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+  rownames = FALSE)
   
   
   output$selected_seq_printout <- renderText({
