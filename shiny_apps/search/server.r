@@ -191,6 +191,7 @@ server <- function(input, output, session) {
     } else {
       return(list(
         h3("Search by taxon"),
+        p("Enter the names of one or more taxa separated by commas. You can also view the entire database by leaving it blank."),
         textInput("taxon_subset", "Taxa to subset the database to:", value = "",
                   placeholder = "Pythium, Phytophthora, Albuginaceae, etc ...", width = "500px"),
         actionButton("search", "Search database")
