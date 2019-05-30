@@ -26,8 +26,7 @@ outfmt_options <- c(" 0: pairwise",
                     "14: XML2 Blast output")
 
 
-ui <- fluidPage(theme = shinytheme("cerulean"),
-                tagList(
+ui <- fluidPage(tagList(
                   tags$head(
                     tags$link(rel="stylesheet", type="text/css", href="style.css"),
                     tags$script(type="text/javascript", src = "busy.js")

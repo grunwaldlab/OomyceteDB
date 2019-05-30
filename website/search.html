@@ -67,9 +67,7 @@ h6 {
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -188,8 +186,6 @@ $(document).ready(function () {
 });
 </script>
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
 
 <style type="text/css">
@@ -263,6 +259,15 @@ $(document).ready(function () {
 
 
 
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
@@ -308,14 +313,19 @@ $(document).ready(function () {
 </div>
 
 
+<p>There are multiple releases of the database. Usually, you should use the latest release, unless you are trying to reproduce a previous analysis. You can download the entire database here or just a subset.</p>
+<div id="the-fasta-header-format" class="section level2">
+<h2>The FASTA header format</h2>
 <p>The database is a FASTA file with the following format:</p>
 <pre><code>&gt;id=my_id|name=my_name|source=my_source|tax_id=my_ncbi_tax_id|taxonomy=my;taxonomic;classification</code></pre>
 <p>For example:</p>
 <pre><code>&gt;id=1|name=Achlya_hypogyna|source=F|tax_id=1202772|taxonomy=cellular organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Achlya;Achlya hypogyna</code></pre>
-<p>Here you can download the whole database or just a subset Without setting any taxon and pressing “Search database”, the whole database will be displayed and can be downloaded.</p>
-<p><strong>The application below might take a few seconds to load</strong></p>
+</div>
+<div id="releases" class="section level2">
+<h2>Releases</h2>
 <iframe class="shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/search" frameBorder="0">
 </iframe>
+</div>
 
 <div class="footer_section">
   <div class="footer_content">

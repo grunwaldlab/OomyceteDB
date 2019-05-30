@@ -41,7 +41,7 @@ server <- function(input, output, session) {
       
       # Subset to taxon
       if (input$taxon_subset != "") {
-        taxa_to_use <- trimws(strsplit(input$taxon_subset, split = ",+")[[1]])
+        taxa_to_use <- trimws(strsplit(input$taxon_subset, split = ", *")[[1]])
         tm_obj <- filter_taxa(tm_obj, tolower(taxon_names) %in% tolower(taxa_to_use),
                               subtaxa = TRUE, supertaxa = TRUE, drop_obs = TRUE,
                               reassign_obs = FALSE)
@@ -64,18 +64,18 @@ server <- function(input, output, session) {
         classifications() %>% 
         `[`(results$data$tax_data$taxon_id)
       
-      family <- unlist(results$supertaxa(results$data$tax_data$taxon_id, recursive = FALSE, value = "taxon_names"))
+      genus <- unlist(results$supertaxa(results$data$tax_data$taxon_id, recursive = FALSE, value = "taxon_names"))
       species <- taxon_names(results)[results$data$tax_data$taxon_id]
       
       
       if (nrow(results$data$tax_data) == 0) {
         output <- tibble("Sequence ID" = character(),
-                        "Family" = character(),
+                        "Genus" = character(),
                         "Species" =  character())
       } else {
         output <- results$data$tax_data %>% 
           transmute("Sequence ID" = id,
-                    "Family" = family,
+                    "Genus" = genus,
                     "Species" =  name)
         
       }
