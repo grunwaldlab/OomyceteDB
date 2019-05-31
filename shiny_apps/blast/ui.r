@@ -54,7 +54,7 @@ ui <- fluidPage(tagList(
                 # this snippet generates a progress indicator for long BLASTs
                 div(class = "busy",  
                     p("Calculation in progress.."), 
-                    img(src="../../images/blast_progress.gif", height = 100, width = 100, align = "center")
+                    img(src = file.path(here(), "images", "progress.gif"), height = 100, width = 100, align = "center")
                 ),
                 
                 # Basic results output

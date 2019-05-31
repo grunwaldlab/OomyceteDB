@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 *_cache
-*_files
+/*_files
 .httr-oauth
 website/data
 website/scripts
