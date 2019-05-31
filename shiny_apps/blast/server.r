@@ -161,7 +161,7 @@ server <- function(input, output, session) {
     })
     
     # this ensures that NAs get added for no hits
-    results <- rbind.fill(lapply(results, function(y) {as.data.frame(y, stringsAsFactors = FALSE)}))
+    results <- plyr::rbind.fill(lapply(results, function(y) {as.data.frame(y, stringsAsFactors = FALSE)}))
     
     # If there are no hits, make an empty table
     if (ncol(results) == 2) {
