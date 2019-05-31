@@ -1,6 +1,5 @@
 library(XML)
 library(shiny)
-library(plyr)
 library(dplyr)
 library(DT)
 library(taxa)
