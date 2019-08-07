@@ -10,7 +10,7 @@ output:
 source("style.R")
 ```
 
-*Updated October 2018*
+*Updated August 2019*
 
 
 **The purpose of this protocol is to amplify the oomycete rps10 locus for use in the rps10 barcode database. If you want to use the Rps10 locus for amplicon metagenomics, use the metabarcoding protocol instead.**
@@ -26,9 +26,9 @@ We ordered the Rps10 database oligos from Life technologies.
 ```{r}
 custom_kable(tibble(
   "Direction" = c("forward", "reverse"),
-  "Primer name" = c("Prv9r-M", "Prv9f-M"),
+  "Primer name" = c("rps10_DB-FOR", "rps10_DB-REV"),
   "Primer sequence (5' -> 3')" = c("GTTGGTTAGAGYARAAGACT", "RTAYACTCTAACCAACTGAGT")
-))
+), escape = opts_knit$get("rmarkdown.pandoc.to") == 'latex')
 ```
 
 
@@ -39,7 +39,7 @@ data <- read_tsv("tables/database_pcr_recipe.tsv")
 data[c(2, 7), 1] <- paste0(unlist(data[c(2, 7), 1]), footnote_marker_number(1))
 data[3, 1] <- paste0(unlist(data[3, 1]), footnote_marker_number(2))
 data[4, 1] <- paste0(unlist(data[4, 1]), footnote_marker_number(3))
-custom_kable(data) %>%
+custom_kable(data, escape = FALSE) %>%
    footnote(number = c("GenScript Taq and 10x buffer from GenScript (Cat. No. E00007)",
                        "25mM MgCl2 from USB (Cat. No 71167)",
                        "100mM dNTP from Invitrogen (Cat. No 10297-018)"))
