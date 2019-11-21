@@ -30,7 +30,16 @@ server <- function(input, output, session) {
       tm_obj$data$tax_data$sequence <- database_seqs
       return(tm_obj)
     })
-
+  
+  taxon_name_matches <- function(taxon_names, queries) {
+    taxon_names <- tolower(sub(taxon_names, pattern = "_", replacement = " "))
+    queries <- tolower(gsub(queries, pattern = "_", replacement = " "))
+    vapply(taxon_names, FUN.VALUE = logical(1), function(tax_name) {
+      any(vapply(queries, FUN.VALUE = logical(1), function(query) {
+        grepl(tax_name, pattern = query, fixed = TRUE)
+      }))
+    })
+  }
   
   selected_subset <- eventReactive(
     eventExpr = input$search,
@@ -42,7 +51,7 @@ server <- function(input, output, session) {
       # Subset to taxon
       if (input$taxon_subset != "") {
         taxa_to_use <- trimws(strsplit(input$taxon_subset, split = ", *")[[1]])
-        tm_obj <- filter_taxa(tm_obj, tolower(taxon_names) %in% tolower(taxa_to_use),
+        tm_obj <- filter_taxa(tm_obj, taxon_name_matches(taxon_names, taxa_to_use),
                               subtaxa = TRUE, supertaxa = TRUE, drop_obs = TRUE,
                               reassign_obs = FALSE)
       }
@@ -70,8 +79,8 @@ server <- function(input, output, session) {
       
       if (nrow(results$data$tax_data) == 0) {
         output <- tibble("Sequence ID" = character(),
-                        "Genus" = character(),
-                        "Species" =  character())
+                         "Genus" = character(),
+                         "Species" =  character())
       } else {
         output <- results$data$tax_data %>% 
           transmute("Sequence ID" = id,
@@ -108,15 +117,15 @@ server <- function(input, output, session) {
       results <- selected_subset()
       clicked <- input$sequence_table_rows_selected
       output <- paste0(paste0(">", results$data$tax_data$input[clicked], "\n",
-                       results$data$tax_data$sequence[clicked]), collapse = "\n")
+                              results$data$tax_data$sequence[clicked]), collapse = "\n")
       return(output)
     }
   })
   
   database_for_download_whole <- reactive({
-      results <- selected_database()
-      paste0(">", results$data$tax_data$input, "\n",
-             results$data$tax_data$sequence)
+    results <- selected_database()
+    paste0(">", results$data$tax_data$input, "\n",
+           results$data$tax_data$sequence)
   })
   
   database_for_download_subset <- eventReactive(
