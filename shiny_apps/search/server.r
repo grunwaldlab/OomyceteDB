@@ -32,8 +32,8 @@ server <- function(input, output, session) {
     })
   
   taxon_name_matches <- function(taxon_names, queries) {
-    taxon_names <- tolower(sub(taxon_names, pattern = "_", replacement = " "))
-    queries <- tolower(gsub(queries, pattern = "_", replacement = " "))
+    taxon_names <- tolower(sub(taxon_names, pattern = "[_ ]+", replacement = " "))
+    queries <- tolower(gsub(queries, pattern = "[_ ]+", replacement = " "))
     vapply(taxon_names, FUN.VALUE = logical(1), function(tax_name) {
       any(vapply(queries, FUN.VALUE = logical(1), function(query) {
         grepl(tax_name, pattern = query, fixed = TRUE)
