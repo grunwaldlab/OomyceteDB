@@ -203,10 +203,7 @@ server <- function(input, output, session) {
     
     if (nrow(results) > 0) {
       # Convert to taxmap
-      tm_obj <- extract_tax_data(results$hit_ids,
-                                 class_sep = ";",
-                                 regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)$",
-                                 key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
+      tm_obj <- convert_oomydb_headers_to_taxmap(results$hit_ids)
       
       # Add on results table to taxmap
       tm_obj$data$tax_data <- bind_cols(tm_obj$data$tax_data, results)
@@ -216,10 +213,11 @@ server <- function(input, output, session) {
       
       # Add on results table to taxmap
       tm_obj$data$tax_data <- as_tibble(bind_cols(data.frame(taxon_id = character(),
-                                                             id = character(),
                                                              name = character(),
-                                                             source = character(),
-                                                             tax_id = character(),
+                                                             strain = character(),
+                                                             ncbi_acc = character(),
+                                                             ncbi_taxid = character(),
+                                                             oodb_id = character(),
                                                              taxonomy = character(),
                                                              input = character()),
                                                   results))
@@ -370,7 +368,7 @@ server <- function(input, output, session) {
     tableout <- data.frame(results$data$tax_data[clicked,])
     tableout <- transmute(tableout,
                           "Hit taxonomic classification" = taxonomy,
-                          "Hit NCBI taxon ID" = tax_id,
+                          "Hit NCBI taxon ID" = ncbi_taxid,
                           # accesion number when we have it
                           "Identity (%)" = round(prop_identity * 100, digits = 3),
                           "Alignment length" = align_len,

@@ -143,3 +143,11 @@ get_latest_release_fa <- function() {
   local_release_nums <- as.numeric(local_release_nums)
   file.path(local_release_dir, local_release_names[which.max(local_release_nums)])
 }
+
+convert_oomydb_headers_to_taxmap <- function(headers, ...) {
+  extract_tax_data(headers,
+                   class_sep = ";",
+                   regex = "name=(.+)\\|strain=(.+)\\|ncbi_acc=(.+)\\|ncbi_taxid=(.+)\\|oodb_id=(.+)\\|taxonomy=(.+)$",
+                   key = c(name = "info", strain = "info", ncbi_acc = "info", ncbi_taxid = "info", oodb_id = "info", taxonomy = "class"),
+                   ...)
+}

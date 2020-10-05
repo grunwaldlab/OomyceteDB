@@ -22,11 +22,7 @@ server <- function(input, output, session) {
     {
       database_path <- file.path(local_release_dir, paste0(selected_database_name(), ".fa"))
       database_seqs <- read_fasta(database_path)
-      tm_obj <- taxa::extract_tax_data(trimws(names(database_seqs)),
-                                       include_match = FALSE,
-                                       class_sep = ";",
-                                       regex = "id=(.*)\\|name=(.*)\\|source=(.*)\\|tax_id=(.*)\\|taxonomy=(.*)$",
-                                       key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"))
+      tm_obj <- convert_oomydb_headers_to_taxmap(trimws(names(database_seqs)), include_match = FALSE)
       tm_obj$data$tax_data$sequence <- database_seqs
       return(tm_obj)
     })
@@ -83,7 +79,7 @@ server <- function(input, output, session) {
                          "Species" =  character())
       } else {
         output <- results$data$tax_data %>% 
-          transmute("Sequence ID" = id,
+          transmute("Sequence ID" = oodb_id,
                     "Genus" = genus,
                     "Species" =  name)
         
