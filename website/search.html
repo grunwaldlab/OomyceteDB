@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -20,6 +20,7 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <!-- Add icon library -->
@@ -81,7 +82,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -230,6 +230,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -241,18 +242,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -316,10 +305,17 @@ $(document).ready(function () {
 <p>There are multiple releases of the database. Usually, you should use the latest release, unless you are trying to reproduce a previous analysis. You can download the entire database here or just a subset.</p>
 <div id="the-fasta-header-format" class="section level2">
 <h2>The FASTA header format</h2>
-<p>The database is a FASTA file with the following format:</p>
-<pre><code>&gt;id=my_id|name=my_name|source=my_source|tax_id=my_ncbi_tax_id|taxonomy=my;taxonomic;classification</code></pre>
-<p>For example:</p>
-<pre><code>&gt;id=1|name=Achlya_hypogyna|source=F|tax_id=1202772|taxonomy=cellular organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Achlya;Achlya hypogyna</code></pre>
+<p>The database is a FASTA file with headers in the following format:</p>
+<pre><code>&gt;name=Aphanomyces_invadans|strain=NJM9701|ncbi_acc=KX405005|ncbi_taxid=157072|oodb_id=13|taxonomy=cellular_organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Aphanomyces_invadans</code></pre>
+<p>The following fields are present:</p>
+<ul>
+<li>“name”: The binomial species name of the organism with spaces replaced by underscores.</li>
+<li>“strain”: The name of the strain/isolate if available. If the strain is not available, it is left empty.</li>
+<li>"ncbi_acc: The NCBI accession number for the sequence submitted to genbank. Note that the version number (the number at the end, after the period) is not included.</li>
+<li>“ncbi_taxid”: The NCBI taxonomy id. This can be looked up using the NCBI accession number.</li>
+<li>“oodb_id”: This is the unique numeric ID specific to OomyceteDB.</li>
+<li>“taxonomy”: The taxonomic classification separated by semicolons. This classification is curated by us and is not the taxonomic classification from NCBI associated with the NCBI taxid.</li>
+</ul>
 </div>
 <div id="releases" class="section level2">
 <h2>Releases</h2>
@@ -359,6 +355,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

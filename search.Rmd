@@ -13,17 +13,20 @@ You can download the entire database here or just a subset.
 
 ## The FASTA header format
 
-The database is a FASTA file with the following format:
+The database is a FASTA file with headers in the following format:
 
 ```
->id=my_id|name=my_name|source=my_source|tax_id=my_ncbi_tax_id|taxonomy=my;taxonomic;classification
+>name=Aphanomyces_invadans|strain=NJM9701|ncbi_acc=KX405005|ncbi_taxid=157072|oodb_id=13|taxonomy=cellular_organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Aphanomyces_invadans
 ```
 
-For example:
+The following fields are present:
 
-```
->id=1|name=Achlya_hypogyna|source=F|tax_id=1202772|taxonomy=cellular organisms;Eukaryota;Stramenopiles;Oomycetes;Saprolegniales;Saprolegniaceae;Achlya;Achlya hypogyna
-```
+* "name": The binomial species name of the organism with spaces replaced by underscores.
+* "strain": The name of the strain/isolate if available. If the strain is not available, it is left empty.
+* "ncbi_acc: The NCBI accession number for the sequence submitted to genbank. Note that the version number (the number at the end, after the period) is not included.
+* "ncbi_taxid": The NCBI taxonomy id. This can be looked up using the NCBI accession number.
+* "oodb_id": This is the unique numeric ID specific to OomyceteDB.
+* "taxonomy": The taxonomic classification separated by semicolons. This classification is curated by us and is not the taxonomic classification from NCBI associated with the NCBI taxid.
 
 ## Releases
 
