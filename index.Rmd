@@ -11,6 +11,9 @@ library(metacoder)
 library(ape)
 ```
 
+<font color="red">
+ <h1>We are currently updating the website. Some tools might not work until this notice is removed.</h1>
+</font>
 
 <font color="red">
  **This website is an early release. Please use with caution and get in touch with us if you find an issue.**
