@@ -1,6 +1,7 @@
 library(here)
 
-googledrive_root_id <- "https://drive.google.com/drive/u/1/folders/1XJLFW_S9EzVOGgHCqg42H88dNtD91gRq"
+googledrive_root_id <- "1XJLFW_S9EzVOGgHCqg42H88dNtD91gRq"
+googledrive_database_id <- "1QelVfSwq4d1OfS8DpQCTX35gJjMI1yPo"
 release_spreadsheet_name <- "releases"
 local_release_spreadsheet_path <- file.path(here(), "data/releases.csv")
 release_name_prefix <- "release_"

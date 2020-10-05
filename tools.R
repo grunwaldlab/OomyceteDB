@@ -99,18 +99,18 @@ update_releases <- function() {
   # Check for new releases
   local_release_names <- list.files(local_release_dir, pattern = paste0(release_name_prefix, "[0-9]+\\.fa"))
   local_release_nums <- str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
-  remote_release_names <- release_data$release_number
-  new_release_indexes <- which(! remote_release_names %in% local_release_nums)
+  new_release_indexes <- which(! release_data$release_number %in% local_release_nums)
   message('Adding ', length(new_release_indexes), ' releases.')
   
   # Process new releases
+  db_file_data <- drive_ls(path = as_id(googledrive_database_id))
   make_one_release <- function(index) {
     # Store a local copy of the database
     new_release_remote <- release_data$source_file[index]
-    if (! new_release_remote %in% drive_files$name) {
+    if (! new_release_remote %in% db_file_data$name) {
       stop('Cannot find remote release file "', new_release_remote, '".')
     }
-    new_release_id <- drive_files$id[drive_files$name == new_release_remote]
+    new_release_id <- db_file_data$id[db_file_data$name == new_release_remote]
     new_release_file_name <- paste0(release_name_prefix, release_data$release_number[index], ".fa")
     new_release_file_path <- file.path(local_release_dir, new_release_file_name)
     drive_download(as_id(new_release_id), path = new_release_file_path)
