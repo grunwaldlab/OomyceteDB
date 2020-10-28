@@ -245,6 +245,7 @@ server <- function(input, output, session) {
   
   # Make hit plot
   output$hit_plot <- renderPlot({
+
     # Check that blast results are available
     my_parsed_results <- req(parsed_results())
     hit_data <- my_parsed_results$data$tax_data
@@ -359,6 +360,7 @@ server <- function(input, output, session) {
   
   # this chunk gets the alignemnt information from a clicked row
   output$clicked <- renderTable({
+    browser()
     # Check that a row has been selected
     req(input$blast_results_rows_selected)
     
@@ -369,7 +371,7 @@ server <- function(input, output, session) {
     tableout <- transmute(tableout,
                           "Hit taxonomic classification" = taxonomy,
                           "Hit NCBI taxon ID" = ncbi_taxid,
-                          # accesion number when we have it
+                          # accession number when we have it
                           "Identity (%)" = round(prop_identity * 100, digits = 3),
                           "Alignment length" = align_len,
                           "Mismatches" = align_len - identity, #check 

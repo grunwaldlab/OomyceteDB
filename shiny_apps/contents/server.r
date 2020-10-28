@@ -18,10 +18,7 @@ source(file.path(here(), "configuration.R"))
 server <- function(input, output, session) {
   output$heat_tree <- renderPlot({
     seqs <- read.FASTA(get_latest_release_fa())
-    obj <- extract_tax_data(names(seqs),
-                            key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
-                            regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
-                            class_sep = ";")
+    obj <- convert_oomydb_headers_to_taxmap(names(seqs))
     set.seed(2)
     obj %>%
       filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%

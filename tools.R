@@ -46,8 +46,8 @@ get_release_data <- function() {
   data$release_name <- paste0(release_name_prefix, data$release_number)
   data$release_path <- file.path(local_release_dir, paste0(data$release_name, ".fa"))
   data$blast_path <- file.path(blast_database_dir, data$release_name)
-  count_data <- system2("grep", c("-c", "'^>'", file.path(local_release_dir, "*.fa")), stdout = TRUE) %>%
-    paste0(collapse = "\n") %>%
+  count_data <- system2("grep", c("-cH", "'^>'", file.path(local_release_dir, "*.fa")), stdout = TRUE) %>%
+    paste0(paste0(collapse = "\n"), "\n") %>%
     read_delim(":", col_names = c("release_name", "seq_count")) %>%
     mutate(release_name = file_path_sans_ext(basename(release_name)))
   data <- left_join(data, count_data, by = "release_name")
@@ -83,7 +83,8 @@ make_blast_database <- function(fasta_path, out_dir_path) {
 
 update_releases <- function() {
   # turn off authentication for google drive
-  drive_auth_config(active = FALSE)
+  # drive_auth_config(active = FALSE)  # old verson way
+  drive_deauth()
   
   # Update local spreadsheet
   drive_files <- drive_ls(path = as_id(googledrive_root_id))
@@ -100,7 +101,7 @@ update_releases <- function() {
   local_release_names <- list.files(local_release_dir, pattern = paste0(release_name_prefix, "[0-9]+\\.fa"))
   local_release_nums <- str_match(local_release_names, pattern = paste0(release_name_prefix, "([0-9]+)\\.fa"))[, 2]
   new_release_indexes <- which(! release_data$release_number %in% local_release_nums)
-  message('Adding ', length(new_release_indexes), ' releases.')
+  message('Adding ', length(new_release_indexes), ' release(s).')
   
   # Process new releases
   db_file_data <- drive_ls(path = as_id(googledrive_database_id))
@@ -113,7 +114,7 @@ update_releases <- function() {
     new_release_id <- db_file_data$id[db_file_data$name == new_release_remote]
     new_release_file_name <- paste0(release_name_prefix, release_data$release_number[index], ".fa")
     new_release_file_path <- file.path(local_release_dir, new_release_file_name)
-    drive_download(as_id(new_release_id), path = new_release_file_path)
+    drive_download(as_id(new_release_id), path = new_release_file_path, overwrite = TRUE)
     
     # Create a blast database for it
     make_blast_database(fasta_path = new_release_file_path, out_dir_path = blast_database_dir)
