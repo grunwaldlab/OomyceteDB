@@ -81,7 +81,7 @@ server <- function(input, output, session) {
       } else {
         output <- results$data$tax_data %>% 
           transmute("Species" = gsub(name, pattern = "_", replacement = " ", fixed = TRUE),
-                    "Strain" = ifelse(tolower(strain) == "na", "", strain),
+                    "Strain" = ifelse(tolower(strain) == "na" |  is.na(strain), "", strain),
                     "NCBI Accession" =  ncbi_acc,
                     "OomyceteDB ID" = oodb_id)
         
