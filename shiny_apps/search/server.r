@@ -74,14 +74,16 @@ server <- function(input, output, session) {
       
       
       if (nrow(results$data$tax_data) == 0) {
-        output <- tibble("Sequence ID" = character(),
-                         "Genus" = character(),
-                         "Species" =  character())
+        output <- tibble("Species" = character(),
+                         "Strain" = character(),
+                         "NCBI Accession" =  character(),
+                         "OomyceteDB ID" = character())
       } else {
         output <- results$data$tax_data %>% 
-          transmute("Sequence ID" = oodb_id,
-                    "Genus" = genus,
-                    "Species" =  name)
+          transmute("Species" = gsub(name, pattern = "_", replacement = " ", fixed = TRUE),
+                    "Strain" = ifelse(tolower(strain) == "na", "", strain),
+                    "NCBI Accession" =  ncbi_acc,
+                    "OomyceteDB ID" = oodb_id)
         
       }
       return(output)
