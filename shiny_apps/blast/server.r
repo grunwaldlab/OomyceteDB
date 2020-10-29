@@ -203,7 +203,8 @@ server <- function(input, output, session) {
     
     if (nrow(results) > 0) {
       # Convert to taxmap
-      tm_obj <- convert_oomydb_headers_to_taxmap(results$hit_ids)
+      tm_obj <- convert_oomydb_headers_to_taxmap(results$hit_ids, 
+                                                 include_match = TRUE)
       
       # Add on results table to taxmap
       tm_obj$data$tax_data <- bind_cols(tm_obj$data$tax_data, results)
@@ -360,7 +361,6 @@ server <- function(input, output, session) {
   
   # this chunk gets the alignemnt information from a clicked row
   output$clicked <- renderTable({
-    browser()
     # Check that a row has been selected
     req(input$blast_results_rows_selected)
     
