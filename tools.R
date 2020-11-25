@@ -83,7 +83,7 @@ make_blast_database <- function(fasta_path, out_dir_path) {
 
 update_releases <- function() {
   # turn off authentication for google drive
-  # drive_auth_config(active = FALSE)  # old verson way
+  # drive_auth_config(active = FALSE)  # old version way
   drive_deauth()
   
   # Update local spreadsheet
@@ -93,8 +93,7 @@ update_releases <- function() {
          '". Check that the file exists in Google Drive or change the name of the file to look for in "configuration.R".')
   }
   releases_spreadsheet_id <- drive_files$id[drive_files$name == release_spreadsheet_name]
-  release_spreadsheet_obj <- gs_key(releases_spreadsheet_id)
-  gs_download(release_spreadsheet_obj, to = local_release_spreadsheet_path, overwrite = TRUE)
+  drive_download(as_id(releases_spreadsheet_id), path = local_release_spreadsheet_path, overwrite = TRUE)
   release_data <- read_csv(local_release_spreadsheet_path)
  
   # Check for new releases
