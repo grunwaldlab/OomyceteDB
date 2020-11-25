@@ -1,6 +1,6 @@
 library(here)
 library(googledrive)
-library(googlesheets)
+library(googlesheets4)
 library(readr)
 library(tools)
 library(stringr)

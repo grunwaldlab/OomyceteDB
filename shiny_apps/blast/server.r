@@ -359,7 +359,7 @@ server <- function(input, output, session) {
     
   }, selection = "single")
   
-  # this chunk gets the alignemnt information from a clicked row
+  # this chunk gets the alignment information from a clicked row
   output$clicked <- renderTable({
     # Check that a row has been selected
     req(input$blast_results_rows_selected)
