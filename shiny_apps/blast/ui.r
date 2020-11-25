@@ -42,7 +42,7 @@ ui <- fluidPage(tagList(
                   div(style="display:inline-block",
                       selectInput("program", "Program:", choices = c("blastn", "tblastn"), width = option_width)),
                   div(style="display:inline-block",
-                      selectInput("db", "Database:", choices = rev(get_public_release_names()), width = option_width)),
+                      selectInput("db", "Release:", choices = rev(get_public_release_names()), width = option_width)),
                   div(style="display:inline-block",
                       selectInput("max_target_seqs", "Hits per query:", choices = c(1, 5, 10, 20, 50, 100), width = option_width, selected = 10)),
                   div(style="display:inline-block",
