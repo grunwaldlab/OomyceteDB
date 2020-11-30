@@ -73,7 +73,7 @@ make_blast_database <- function(fasta_path, out_dir_path) {
   # Make blast database with temporary file
   blast_db_name <- file_path_sans_ext(basename(fasta_path))
   blast_db_path <- file.path(out_dir_path, blast_db_name)
-  makeblastdb_command <- paste("makeblastdb",
+  makeblastdb_command <- paste(file.path(blast_path, "makeblastdb"),
                                "-in", temp_database_path,
                                "-parse_seqids",
                                "-dbtype nucl",
