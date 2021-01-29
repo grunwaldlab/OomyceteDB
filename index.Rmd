@@ -9,15 +9,10 @@ source("tools.R")
 source("configuration.R")
 library(metacoder)
 library(ape)
+library(dplyr)
+library(knitr)
+library(kableExtra)
 ```
-
-<font color="red">
- <h1>We are currently updating the website. Some tools might not work until this notice is removed.</h1>
-</font>
-
-<font color="red">
- **This website is an early release. Please use with caution and get in touch with us if you find an issue.**
-</font>
 
 **OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
 *rps10* is a mitochondrial locus chosen as a molecular barcode suitable for metabarcoding or amplicon sequencing specific to the Oomycetes.
@@ -30,12 +25,13 @@ The following heat-tree shows the species currently represented in the database:
 <!-- <iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/contents" frameBorder="0">
 </iframe> -->
 
-```{r cache=FALSE, fig.width=10, fig.height=8}
+```{r cache=FALSE, fig.width=10, fig.height=8, include=FALSE}
 seqs <- read.FASTA(get_latest_release_fa())
-obj <- extract_tax_data(names(seqs),
-                        key = c(id = "info", name = "info", source = "info", tax_id = "info", taxonomy = "class"),
-                        regex = "id=(.+)\\|name=(.+)\\|source=(.+)\\|tax_id=(.+)\\|taxonomy=(.+)",
-                        class_sep = ";")
+obj <- names(seqs) %>%
+  gsub(pattern = '_', replacement = ' ') %>%
+  extract_tax_data(class_sep = ";",
+                   regex = "name=(.+)\\|strain=(.+)\\|ncbi acc=(.+)\\|ncbi taxid=(.+)\\|oodb id=(.+)\\|taxonomy=(.+)$",
+                   key = c(name = "info", strain = "info", ncbi_acc = "info", ncbi_taxid = "info", oodb_id = "info", taxonomy = "class"))
 set.seed(2)
 obj %>%
   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
@@ -44,7 +40,7 @@ obj %>%
             node_size = n_obs, 
             node_color = n_obs,
             node_size_range = c(0.01, 0.04),
-            node_label_size_range = c(0.015, 0.03),
+            node_label_size_range = c(0.01, 0.02),
             edge_size_range =  c(0.01, 0.04) * .5,
             layout = "da", initial_layout = "re",
             node_color_axis_label = "Number of sequences")
@@ -53,25 +49,12 @@ obj %>%
 **OomyceteDB** currently includes the following Oomycete taxa:
 
 ```{r}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-taxa_in_table <- obj %>%
-  filter_taxa(! taxon_names %in% c("unclassified_Phytophthora", "parasitica_species_group")) %>%
-  filter_taxa(!is_leaf) %>% 
-  filter_taxa(is_leaf) %>%
-  taxon_names()
-genus_table <- obj %>%
-  filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
-  get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
-  filter(taxon_names %in% taxa_in_table)
+genus_table <- read_csv('genus_count.csv')
   
-genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
-                                       "**Total**",
-                                       paste0("**", sum(genus_table$n_subtaxa), "**")))
+genus_table <- rbind(genus_table, list("**Total**",
+                                       paste0("**", sum(genus_table$`Number of sequences`), "**")))
 genus_table %>%
-  arrange(desc(as.numeric(n_subtaxa))) %>%
-  transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
+  arrange(desc(genus_table$`Number of sequences`)) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
   column_spec(1, italic = T) 
