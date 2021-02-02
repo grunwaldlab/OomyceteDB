@@ -12,6 +12,7 @@ library(ape)
 library(dplyr)
 library(knitr)
 library(kableExtra)
+library(purrr)
 ```
 
 **OomyceteDB** provides quality-controlled, aligned and annotated Oomycete *rps10* sequences.
@@ -19,44 +20,65 @@ library(kableExtra)
 The curated database can be downloaded or queried using BLAST (for any release).
 We invite all members of the oomycete community to contribute sequences for new Oomycete species.
 We will include any new taxon with a GenBank accession you share with us.
-The following heat-tree shows the species currently represented in the database:
+
+The following heat-tree shows the taxa currently represented in the database:
 
 
 <!-- <iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/contents" frameBorder="0">
 </iframe> -->
 
-```{r cache=FALSE, fig.width=10, fig.height=8, include=FALSE}
-seqs <- read.FASTA(get_latest_release_fa())
-obj <- names(seqs) %>%
-  gsub(pattern = '_', replacement = ' ') %>%
-  extract_tax_data(class_sep = ";",
-                   regex = "name=(.+)\\|strain=(.+)\\|ncbi acc=(.+)\\|ncbi taxid=(.+)\\|oodb id=(.+)\\|taxonomy=(.+)$",
-                   key = c(name = "info", strain = "info", ncbi_acc = "info", ncbi_taxid = "info", oodb_id = "info", taxonomy = "class"))
+```{r cache=FALSE, fig.width=12, fig.height=12}
+rps10_db <- read_fasta(file.path("2020-10-22_release_1_rps10.fasta"))
+rps10_data <- str_match(names(rps10_db), pattern = "name=(.+)\\|strain=(.+)\\|ncbi_acc=(.+)\\|ncbi_taxid=(.+)\\|oodb_id=(.+)\\|taxonomy=(.+)$")
+colnames(rps10_data) <- c("header", "name", "strain", "ncbi_acc", "ncbi_taxid", "oodb_id", "taxonomy")
+rps10_data <- as_tibble(rps10_data)
+
+# Split genus into its own level
+binomial <- map_chr(str_split(rps10_data$taxonomy, pattern = ';'), `[`, 7)
+genus <- map_chr(str_split(binomial, pattern = '_'), `[`, 1)
+rps10_data$taxonomy <- map_chr(seq_along(rps10_data$taxonomy), function(index) {
+  sub(rps10_data$taxonomy[index], pattern = binomial[index], replacement = paste0(genus[index], ';', binomial[index]))
+})
+
+# Convert to taxmap
+obj <- parse_tax_data(rps10_data, class_sep = ";", class_cols = 'taxonomy')
+
+# Make plot
 set.seed(2)
 obj %>%
   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
   remove_redundant_names() %>%
-  heat_tree(node_label = taxon_names,
+  heat_tree(node_label = gsub(pattern = '_', replacement = ' ', taxon_names),
             node_size = n_obs, 
             node_color = n_obs,
-            node_size_range = c(0.01, 0.04),
-            node_label_size_range = c(0.01, 0.02),
-            edge_size_range =  c(0.01, 0.04) * .5,
+            node_size_range = c(0.006, 0.04),
+            node_label_size_range = c(0.0075, 0.03),
             layout = "da", initial_layout = "re",
             node_color_axis_label = "Number of sequences")
 ```
 
-**OomyceteDB** currently includes the following Oomycete taxa:
+OomyceteDB currently includes the following Oomycete taxa:
 
-```{r}
-genus_table <- read_csv('genus_count.csv')
+```{r warning=FALSE}
+taxa_in_table <- obj %>%
+  filter_taxa(! taxon_names %in% c("unclassified_Phytophthora", "parasitica_species_group")) %>%
+  filter_taxa(!is_leaf) %>% 
+  filter_taxa(is_leaf) %>%
+  taxon_names()
+genus_table <- obj %>%
+  filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
+  get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
+  filter(taxon_names %in% taxa_in_table)
   
-genus_table <- rbind(genus_table, list("**Total**",
-                                       paste0("**", sum(genus_table$`Number of sequences`), "**")))
+genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
+                                       "**Total**",
+                                       paste0("**", sum(genus_table$n_subtaxa), "**")))
 genus_table %>%
-  arrange(desc(genus_table$`Number of sequences`)) %>%
+  arrange(desc(as.numeric(n_subtaxa))) %>%
+  transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
   column_spec(1, italic = T) 
 ```
+
 
