@@ -55,6 +55,47 @@ obj %>%
             node_label_size_range = c(0.0075, 0.03),
             layout = "da", initial_layout = "re",
             node_color_axis_label = "Number of sequences")
+
+
+# set.seed(2)
+# obj %>%
+#   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
+#   remove_redundant_names() %>%
+#   heat_tree(node_label = ifelse(is_leaf, '', gsub(pattern = '_', replacement = ' ', taxon_names)),
+#             node_size = n_obs, 
+#             node_color = n_obs,
+#             node_size_range = c(0.006, 0.04),
+#             node_label_size_range = c(0.01, 0.03),
+#             layout = "da", initial_layout = "re",
+#             node_color_axis_label = "Number of sequences",
+#             output_file = 'no_species_labels.pdf')
+
+
+# set.seed(2)
+# obj %>%
+#   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
+#   remove_redundant_names() %>%
+#   heat_tree(node_label = ifelse(n_obs == 1 & is_leaf, '', gsub(pattern = '_', replacement = ' ', taxon_names)),
+#             node_size = n_obs, 
+#             node_color = n_obs,
+#             node_size_range = c(0.006, 0.04),
+#             node_label_size_range = c(0.008, 0.03),
+#             layout = "da", initial_layout = "re",
+#             node_color_axis_label = "Number of sequences",
+#             output_file = 'greater_than_1_labels.pdf')
+
+# set.seed(2)
+# obj %>%
+#   filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
+#   remove_redundant_names() %>%
+#   heat_tree(node_label = ifelse(runif(length(taxon_names)) > .5 & is_leaf, '', gsub(pattern = '_', replacement = ' ', taxon_names)),
+#             node_size = n_obs, 
+#             node_color = n_obs,
+#             node_size_range = c(0.006, 0.04),
+#             node_label_size_range = c(0.008, 0.03),
+#             layout = "da", initial_layout = "re",
+#             node_color_axis_label = "Number of sequences",
+#             output_file = 'random_subset_labels.pdf')
 ```
 
 OomyceteDB currently includes the following Oomycete taxa:
