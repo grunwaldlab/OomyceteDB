@@ -30,6 +30,8 @@ The following fields are present:
 
 ## Releases
 
+**The application below might take a few seconds to load**
+
 <iframe class = "shiny_frame" src="http://oomy.cgrb.oregonstate.edu:3838/grunwald/OomyceteDB_dev/search" frameBorder="0">
 </iframe>
 

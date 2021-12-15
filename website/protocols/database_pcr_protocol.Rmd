@@ -26,7 +26,7 @@ We ordered the Rps10 database oligos from Life technologies.
 ```{r}
 custom_kable(tibble(
   "Direction" = c("forward", "reverse"),
-  "Primer name" = c("rps10_DB-FOR", "rps10_DB-REV"),
+  "Primer name" = c("rps10_DB_F", "rps10_DB_R"),
   "Primer sequence (5' -> 3')" = c("GTTGGTTAGAGYARAAGACT", "RTAYACTCTAACCAACTGAGT")
 ), escape = opts_knit$get("rmarkdown.pandoc.to") == 'latex')
 ```
@@ -39,7 +39,8 @@ data <- read_tsv("tables/database_pcr_recipe.tsv")
 data[c(2, 7), 1] <- paste0(unlist(data[c(2, 7), 1]), footnote_marker_number(1))
 data[3, 1] <- paste0(unlist(data[3, 1]), footnote_marker_number(2))
 data[4, 1] <- paste0(unlist(data[4, 1]), footnote_marker_number(3))
-custom_kable(data, escape = FALSE) %>%
+data[5:6, 1] <- gsub(unlist(data[5:6, 1]), pattern = '_', replacement = '\\_', fixed = TRUE)
+custom_kable(data) %>%
    footnote(number = c("GenScript Taq and 10x buffer from GenScript (Cat. No. E00007)",
                        "25mM MgCl2 from USB (Cat. No 71167)",
                        "100mM dNTP from Invitrogen (Cat. No 10297-018)"))
