@@ -21,9 +21,7 @@ outfmt_options <- c(" 0: pairwise",
                     " 9: Binary ASN.1",
                     "10: Comma-separated values",
                     "11: BLAST archive format (ASN.1)", 
-                    "12: JSON Seqalign output",
-                    "13: JSON Blast output",
-                    "14: XML2 Blast output")
+                    "12: JSON Seqalign output")
 
 
 ui <- fluidPage(tagList(
