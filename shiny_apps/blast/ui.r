@@ -44,7 +44,7 @@ ui <- fluidPage(tagList(
                   div(style="display:inline-block",
                       selectInput("max_target_seqs", "Hits per query:", choices = c(1, 5, 10, 20, 50, 100), width = option_width, selected = 10)),
                   div(style="display:inline-block",
-                      selectInput("eval", "Max e-value:", choices = c(1,0.001,1e-4,1e-5,1e-10), width = option_width)),
+                      selectInput("eval", "Max e-value:", choices = c(1,0.001,1e-4,1e-5,1e-10, 1e-50), width = option_width)),
                   br(),
                   actionButton("blast", "Run BLAST")
                 ),
