@@ -81,7 +81,7 @@ server <- function(input, output, session) {
       # Calls BLAST
       blast_command <- paste(file.path(blast_path, input$program),
                              "-query", query_temp_path,
-                             "-db", db ,
+                             "-db", db,
                              ifelse(input$program == "blastn", "-dust no", ""),
                              "-evalue", input$eval,
                              "-outfmt 11",
