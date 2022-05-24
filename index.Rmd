@@ -28,7 +28,7 @@ The following heat-tree shows the taxa currently represented in the database:
 </iframe> -->
 
 ```{r cache=FALSE, fig.width=12, fig.height=12}
-rps10_db <- read_fasta(file.path("2020-10-22_release_1_rps10.fasta"))
+rps10_db <- read_fasta(file.path("data/releases/release_1.fa"))
 rps10_data <- str_match(names(rps10_db), pattern = "name=(.+)\\|strain=(.+)\\|ncbi_acc=(.+)\\|ncbi_taxid=(.+)\\|oodb_id=(.+)\\|taxonomy=(.+)$")
 colnames(rps10_data) <- c("header", "name", "strain", "ncbi_acc", "ncbi_taxid", "oodb_id", "taxonomy")
 rps10_data <- as_tibble(rps10_data)
@@ -109,10 +109,12 @@ taxa_in_table <- obj %>%
 genus_table <- obj %>%
   filter_taxa(taxon_names %in% taxa_in_table, subtaxa = TRUE) %>%
   get_data_frame(c("n_obs", "taxon_names", "n_subtaxa")) %>%
-  filter(taxon_names %in% taxa_in_table)
+  filter(taxon_names %in% taxa_in_table) %>%
+  group_by(taxon_names) %>%
+  summarise(n_obs = sum(n_obs), n_subtaxa = sum(n_subtaxa))
   
-genus_table <- rbind(genus_table, list(paste0("**", sum(genus_table$n_obs), "**"),
-                                       "**Total**",
+genus_table <- rbind(genus_table, list("**Total**",
+                                       paste0("**", sum(genus_table$n_obs), "**"),
                                        paste0("**", sum(genus_table$n_subtaxa), "**")))
 genus_table %>%
   arrange(desc(as.numeric(n_subtaxa))) %>%
