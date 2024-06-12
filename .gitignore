@@ -10,4 +10,5 @@ website/scripts
 website/shiny_apps
 website/notes
 *.html
+!docs/*.html
 site_libs
