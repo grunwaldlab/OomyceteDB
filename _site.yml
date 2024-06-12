@@ -4,8 +4,6 @@ navbar:
   left:
   - text: Download
     href: search.html
-  - text: BLAST
-    href: blast.html
   - text: Protocols
     href: protocols.html
   - text: About
@@ -23,5 +21,5 @@ output:
     css: styles.css
     lib_dir: site_libs
     self_contained: no
-output_dir: website
+output_dir: docs
 

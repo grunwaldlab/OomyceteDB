@@ -1,0 +1,69 @@
+---
+title: "Rps10 metabarcoding primer ordering and mixing protocol"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document: default
+geometry: left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm
+---
+
+```{r setup, include=FALSE}
+source("style.R")
+```
+
+*Updated March 2020*
+
+This protocol is used to prepare PCR primers for the rps10 locus for metabarcoding.
+
+
+## Ordering rps10 locus-specific primers
+
+Both the rps10 forward and reverse primer binding sites have SNPs.
+To reduce the amount of primer degeneracy in the rps10 locus-specific PCR reaction it is advisable to order multiple specific oligo sequences for the reverse primer sequences rather than ordering oligos with IUPAC ambiguity codes.
+Using the IUPAC code Y (C,T) for the rps10_F1 oligo is optional but simplifies the primer mixture step. 
+
+
+## Rps10 locus-specific forward primers
+
+```{r}
+custom_kable(tibble(
+  "Primer name" = c("rps10\\_F1", "rps10\\_F2"),
+  "Forward Primer sequence (5' -> 3')" = c(paste0("TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG", footnote_marker_number(1), " GTTGGTTAGAGYAAAAGACT", footnote_marker_number(2)),
+                                           "TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG GTTGGTTAGAGTAGAAGACT")
+)) %>% footnote(number = c("before space = Forward 5' Illumina overhang adapter sequence",
+                           "after space  = Rps10 locus-specific forward primer"))
+```
+
+
+## Rps10 locus-specific reverse primers
+
+```{r}
+custom_kable(tibble(
+  "Primer name" = paste0("rps10\\_R", 1:7),
+  "Reverse Primer sequence  (5' -> 3')" = c(paste0("GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG", footnote_marker_number(1), "ATGCTTAGAAAGATTTGAACT", footnote_marker_number(2)),
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATACTTAGAAAGATTTGAACT",
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGACTTGAACT",
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGACTCGAACT",
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCCTAGAAAGACTCGAACT",
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGTTTAGAAAGATTCGAACT",
+                                            "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG ATGCTTAGAAAGATTCGAACT")
+)) %>% footnote(number = c("before space = Reverse 5' Illumina overhang adapter sequence",
+                           "after space  = Rps10 locus-specific reverse primer"))
+```
+
+
+## Rps10 locus-specific primer mixture
+
+```{r}
+data <- read_tsv("tables/metabarcoding_primer_mixing.tsv")
+data$Reagent <- gsub(data$Reagent, pattern = "_", replacement = "\\_", fixed = TRUE)
+data[1, 3] <- paste0(unlist(data[1, 3]), footnote_marker_number(2))
+data[10, 1] <- paste0(unlist(data[10, 1]), footnote_marker_number(3))
+custom_kable(data) %>% 
+  footnote(number = c("We ordered the Rps10 locus-specific oligos from Life technologies",
+                      "The two primers represented by rps10_F1 each have a final concentration of 2.0µM",
+                      "The TE Buffer (Tris-EDTA) is a 1X Solution, pH 8.0, Molecular Biology Grade (Cat. No. BP2473100)"))
+```
+
+
+

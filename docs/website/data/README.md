@@ -1,0 +1,1 @@
+This folder contains the archived copies of the rps10 database and blast databases made from them.
