@@ -1,1 +1,0 @@
-This is where releases will be automatically added nightly when the google drive releases spreadsheet is updated.

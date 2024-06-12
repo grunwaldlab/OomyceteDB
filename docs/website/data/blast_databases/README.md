@@ -1,1 +1,0 @@
-This is where blast databases for the rsp10 locus are stored.
