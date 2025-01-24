@@ -9,7 +9,7 @@ parser <- arg_parser("Convert oomycetedb excel file to FASTA for release. This a
 parser <- add_argument(parser, "xlsx_path", help="Path to excel file with data to convert to FASTA.", type="character")
 parser <- add_argument(parser, "out_path", help="Path to write the FASTA file to.", type="character")
 arguments <- parse_args(parser)
-arguments <- list(xlsx_path = "~/downloads/DB_release_1.2.xlsx", out_path = 'deleteme.fasta')
+# arguments <- list(xlsx_path = "~/downloads/DB_release_1.2.xlsx", out_path = 'deleteme.fasta')
 
 # Parse excel file
 input_data <- readxl::read_xlsx(arguments$xlsx_path)
