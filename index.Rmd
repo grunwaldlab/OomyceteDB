@@ -100,7 +100,7 @@ obj %>%
 
 OomyceteDB currently includes the following Oomycete taxa:
 
-```{r warning=FALSE}
+```{r warning=FALSE, results='asis'}
 taxa_in_table <- obj %>%
   filter_taxa(! taxon_names %in% c("unclassified_Phytophthora", "parasitica_species_group")) %>%
   filter_taxa(!is_leaf) %>% 
@@ -120,8 +120,9 @@ genus_table %>%
   arrange(desc(as.numeric(n_subtaxa))) %>%
   transmute("Genus" = taxon_names, "Number of species" = n_subtaxa, "Number of sequences" = n_obs) %>%
   kable() %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
-  column_spec(1, italic = T) 
+  column_spec(1, italic = T) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>%
+  print()
 ```
 
 
