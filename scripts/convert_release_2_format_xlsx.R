@@ -14,14 +14,13 @@ arguments <- parse_args(parser)
 # Parse excel file
 input_data <- readxl::read_xlsx(arguments$xlsx_path)
 colnames(input_data) <- tolower(colnames(input_data))
-colnames(input_data)[colnames(input_data) == 'isolate/strain'] <- 'strain'
 
 # Convert to FASTA
 input_data$binomial <- paste0(input_data$genus, '_', input_data$species)
-input_data$taxonomy <- paste('cellular_organisms;Eukaryota;Stramenopiles;Oomycetes', input_data$order, input_data$family, input_data$binomial, sep = ';')
-col_key <- c(
+input_data$taxonomy <- paste('cellular_organisms;Eukaryota;Stramenopiles;Oomycota', input_data$order, input_data$family, input_data$binomial, sep = ';')
+col_key <- c( # name in input = name in output 
   binomial = 'name',
-  strain = 'strain',
+  strain_isolate = 'strain',
   genbank_id = 'ncbi_acc',
   taxon_id = 'ncbi_taxid',
   oodb_id = 'oodb_id',

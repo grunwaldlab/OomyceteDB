@@ -46,7 +46,7 @@ obj <- parse_tax_data(rps10_data, class_sep = ";", class_cols = 'taxonomy')
 # Make plot
 set.seed(2)
 obj %>%
-  filter_taxa(taxon_names == "Oomycetes", subtaxa = TRUE) %>%
+  filter_taxa(taxon_names == "Oomycota", subtaxa = TRUE) %>%
   remove_redundant_names() %>%
   heat_tree(node_label = gsub(pattern = '_', replacement = ' ', taxon_names),
             node_size = n_obs, 
