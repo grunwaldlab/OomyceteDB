@@ -14,10 +14,13 @@ arguments <- parse_args(parser)
 # Parse excel file
 input_data <- readxl::read_xlsx(arguments$xlsx_path)
 colnames(input_data) <- tolower(colnames(input_data))
+input_data$binomial <- paste0(input_data$genus, ' ', input_data$species)
+input_data$taxonomy <- paste('cellular_organisms;Eukaryota;Stramenopiles;Oomycota', input_data$order, input_data$family, input_data$binomial, sep = ';')
+
+# Look up missing taxon IDs if possible
+input_data$taxon_id[input_data$taxon_id == 'na'] <- taxize::get_uid(input_data$binomial[input_data$taxon_id == 'na'])
 
 # Convert to FASTA
-input_data$binomial <- paste0(input_data$genus, '_', input_data$species)
-input_data$taxonomy <- paste('cellular_organisms;Eukaryota;Stramenopiles;Oomycota', input_data$order, input_data$family, input_data$binomial, sep = ';')
 col_key <- c( # name in input = name in output 
   binomial = 'name',
   strain_isolate = 'strain',
@@ -27,7 +30,9 @@ col_key <- c( # name in input = name in output
   taxonomy = 'taxonomy'
 )
 headers <- vapply(seq_len(nrow(input_data)), function(i) {
-  paste0(col_key, '=', input_data[i, names(col_key)], collapse = '|')  
+  out <- paste0(col_key, '=', input_data[i, names(col_key)], collapse = '|')
+  out <- gsub(out, pattern = ' ', replacement = '_')
+  return(out)
 }, FUN.VALUE = character(1))
 output <- paste0('>', headers, '\n', input_data$sequence)
 writeLines(output, arguments$out_path)
