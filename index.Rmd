@@ -37,7 +37,7 @@ rps10_data <- as_tibble(rps10_data)
 binomial <- map_chr(str_split(rps10_data$taxonomy, pattern = ';'), `[`, 7)
 genus <- map_chr(str_split(binomial, pattern = '_'), `[`, 1)
 rps10_data$taxonomy <- map_chr(seq_along(rps10_data$taxonomy), function(index) {
-  sub(rps10_data$taxonomy[index], pattern = binomial[index], replacement = paste0(genus[index], ';', binomial[index]))
+  sub(rps10_data$taxonomy[index], pattern = binomial[index], replacement = paste0(genus[index], ';', binomial[index]), fixed = TRUE)
 })
 
 # Convert to taxmap
