@@ -29,7 +29,7 @@ This site and the data hosted here is licensed as [Attribution-ShareAlike 4.0 In
 
 ## How to cite
 
-Foster, Zachary SL, Felipe Albornoz, Valerie Fieland, Meredith Larsen, Andrew Jones, Brett Tyler, Hai Nguyen et al. "A new oomycete metabarcoding method using the rps10 gene." Phytobiomes Journal (2022).
+Foster, Z.S., Albornoz, F.E., Fieland, V.J., Larsen, M.M., Jones, F.A., Tyler, B.M., Nguyen, H.D., Burgess, T.I., Riddell, C., Voglmayr, H. and Martin, F.N., 2022. A new oomycete metabarcoding method using the rps10 gene. Phytobiomes J. 6:214-226. [https://doi.org/10.1094/PBIOMES-02-22-0009-R](https://doi.org/10.1094/PBIOMES-02-22-0009-R).
 
 ## Disclaimer statement
 
